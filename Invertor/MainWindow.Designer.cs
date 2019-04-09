@@ -38,11 +38,13 @@
             this.fileNewButton = new System.Windows.Forms.Button();
             this.drawTapPage = new System.Windows.Forms.TabPage();
             this.lineButton = new System.Windows.Forms.CheckBox();
+            this.rectangleButton = new System.Windows.Forms.CheckBox();
             this.viewTabPage = new System.Windows.Forms.TabPage();
             this.originMovementStepLabel = new System.Windows.Forms.Label();
             this.scaleStepLabel = new System.Windows.Forms.Label();
             this.originMovementStepValue = new System.Windows.Forms.NumericUpDown();
             this.scaleStepValue = new System.Windows.Forms.NumericUpDown();
+            this.invertedDirectionCheckbox = new System.Windows.Forms.CheckBox();
             this.sidePanel1 = new System.Windows.Forms.Panel();
             this.objectListView = new System.Windows.Forms.ListBox();
             this.drawingAreaStatusStrip = new System.Windows.Forms.StatusStrip();
@@ -156,6 +158,7 @@
             this.drawTapPage.Controls.Add(this.lineColorPicture);
             this.drawTapPage.Controls.Add(this.lineColorButton);
             this.drawTapPage.Controls.Add(this.lineButton);
+            this.drawTapPage.Controls.Add(this.rectangleButton);
             this.drawTapPage.Location = new System.Drawing.Point(4, 22);
             this.drawTapPage.Name = "drawTapPage";
             this.drawTapPage.Padding = new System.Windows.Forms.Padding(3);
@@ -175,6 +178,18 @@
             this.lineButton.Text = "Line";
             this.lineButton.UseVisualStyleBackColor = true;
             this.lineButton.CheckedChanged += new System.EventHandler(this.lineButton_CheckedChanged);
+            //
+            // rectangleButton
+            //
+            this.rectangleButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rectangleButton.AutoSize = true;
+            this.rectangleButton.Location = new System.Drawing.Point(130, 6);
+            this.rectangleButton.Name = "rectangleButton";
+            this.rectangleButton.Size = new System.Drawing.Size(37, 23);
+            this.rectangleButton.TabIndex = 1;
+            this.rectangleButton.Text = "Rectangle";
+            this.rectangleButton.UseVisualStyleBackColor = true;
+            this.rectangleButton.CheckedChanged += new System.EventHandler(this.rectangleButton_CheckedChanged);
             // 
             // viewTabPage
             // 
@@ -182,6 +197,7 @@
             this.viewTabPage.Controls.Add(this.scaleStepLabel);
             this.viewTabPage.Controls.Add(this.originMovementStepValue);
             this.viewTabPage.Controls.Add(this.scaleStepValue);
+            this.viewTabPage.Controls.Add(this.invertedDirectionCheckbox);
             this.viewTabPage.Location = new System.Drawing.Point(4, 22);
             this.viewTabPage.Name = "viewTabPage";
             this.viewTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -241,6 +257,17 @@
             0,
             0,
             0});
+            //
+            // invertedDirectionCheckbox
+            //
+            this.rectangleButton.Appearance = System.Windows.Forms.Appearance.Normal;
+            this.rectangleButton.AutoSize = false;
+            this.rectangleButton.Location = new System.Drawing.Point(123, 56);
+            this.rectangleButton.Name = "invertedDirectionCheckbox";
+            this.rectangleButton.Size = new System.Drawing.Size(37, 23);
+            this.rectangleButton.TabIndex = 1;
+            this.rectangleButton.Text = "Inverted key direction";
+            this.rectangleButton.UseVisualStyleBackColor = true;
             // 
             // sidePanel1
             // 
@@ -411,6 +438,7 @@
 
         private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.CheckBox lineButton;
+        private System.Windows.Forms.CheckBox rectangleButton;
         private System.Windows.Forms.TabControl topRibbonTab;
         private System.Windows.Forms.TabPage fileTabPage;
         private System.Windows.Forms.Button fileSaveAsButton;
@@ -432,6 +460,7 @@
         private System.Windows.Forms.Label scaleStepLabel;
         private System.Windows.Forms.NumericUpDown originMovementStepValue;
         private System.Windows.Forms.NumericUpDown scaleStepValue;
+        private System.Windows.Forms.CheckBox invertedDirectionCheckbox;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.PictureBox lineColorPicture;

@@ -71,6 +71,15 @@ namespace Invertor
             }
         }
 
+        private void rectangleButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rectangleButton.Checked)
+            {
+                resetSelectedTool(rectangleButton);
+                selectedTool = "rectangle";
+            }
+        }
+
         void resetSelectedTool(CheckBox sender)
         {
             foreach(CheckBox o in toolControlsList)
@@ -190,10 +199,6 @@ namespace Invertor
                 O.Render(g, bmp, Origin, scale);
             }
 
-            //if draging line, draw to mouse position
-            if (secondLastPoint != null)
-                renderLineToMouse();
-
             //draw snapping point -> just draw
             Point a = pointSnapping(mousePoint.systemPoint);
             if (a != null)
@@ -202,21 +207,28 @@ namespace Invertor
                 mousePoint = a;
             }
 
-
+            //if draging line, draw to mouse position
+            if (secondLastPoint != null)
+                renderDraging();
 
             //set drawing area as a drawn bitmap
             drawingArea.Image = bmp;
         }
         
         //render active line to mouse
-        void renderLineToMouse()
+        void renderDraging()
         {
-            Point mouse = new Point("", (int)((drawingArea.PointToClient(MousePosition).X - Origin.X) / scale), (int)((drawingArea.PointToClient(MousePosition).Y - Origin.Y) / scale));
-            g.DrawLine(new Pen(lineColorPicture.BackColor, (int)lineThicknessValue.Value), new System.Drawing.Point((int)(scale * secondLastPoint.X) + Origin.X, (int)(scale * secondLastPoint.Y) + Origin.Y), new System.Drawing.Point((int)(mouse.X * scale) + Origin.X, (int)(mouse.Y * scale) + Origin.Y));
+            switch (selectedTool)
+            {
+                case "line":
+                    g.DrawLine(new Pen(lineColorPicture.BackColor, (int)lineThicknessValue.Value), new System.Drawing.Point((int)(scale * secondLastPoint.X) + Origin.X, (int)(scale * secondLastPoint.Y) + Origin.Y), new System.Drawing.Point((int)(mousePoint.X * scale) + Origin.X, (int)(mousePoint.Y * scale) + Origin.Y));
+                    break;
+                case "rectangle":
+                    break;
+            }
         }
 
         #endregion
-        
 
         //keybinding
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -261,17 +273,29 @@ namespace Invertor
                         firstLastPoint = null;
                         secondLastPoint = null;
                         break;
-                    case Keys.W:
-                        Origin.Y -= (int)((double)originMovementStepValue.Value * scale);
+                    case Keys.Up:
+                        if(invertedDirectionCheckbox.Checked)
+                            Origin.Y += (int)((double)originMovementStepValue.Value * scale);
+                        else
+                            Origin.Y -= (int)((double)originMovementStepValue.Value * scale);
                         break;
-                    case Keys.S:
-                        Origin.Y += (int)((double)originMovementStepValue.Value * scale);
+                    case Keys.Down:
+                        if (invertedDirectionCheckbox.Checked)
+                            Origin.Y -= (int)((double)originMovementStepValue.Value * scale);
+                        else
+                            Origin.Y += (int)((double)originMovementStepValue.Value * scale);
                         break;
-                    case Keys.A:
-                        Origin.X -= (int)((double)originMovementStepValue.Value * scale);
+                    case Keys.Left:
+                        if (invertedDirectionCheckbox.Checked)
+                            Origin.X += (int)((double)originMovementStepValue.Value * scale);
+                        else
+                            Origin.X -= (int)((double)originMovementStepValue.Value * scale);
                         break;
-                    case Keys.D:
-                        Origin.X += (int)((double)originMovementStepValue.Value * scale);
+                    case Keys.Right:
+                        if (invertedDirectionCheckbox.Checked)
+                            Origin.X -= (int)((double)originMovementStepValue.Value * scale);
+                        else
+                            Origin.X += (int)((double)originMovementStepValue.Value * scale);
                         break;
                 }
             }
