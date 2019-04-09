@@ -107,12 +107,6 @@ namespace Invertor
         private void drawingArea_Click(object sender, EventArgs e)
         {
             drawingArea.Focus();
-            /*
-            Point p = pointSnapping(mousePoint.systemPoint);
-            if (p != null)
-            {
-                mousePoint = p;
-            }*/
 
             if(selectedTool != "")
             {
@@ -131,7 +125,9 @@ namespace Invertor
                     switch (selectedTool) //tool switch
                     {
                         case "line":
-                            firstLastPoint = addPoint(firstLastPoint.systemPoint);
+                            //firstLastPoint = addPoint(firstLastPoint.systemPoint);
+                            if(!objectsInSketch.Contains(firstLastPoint))
+                                objectsInSketch.Add(firstLastPoint);
                             addLine(firstLastPoint,secondLastPoint);
                             break;
                         case "rectangle":
@@ -197,8 +193,15 @@ namespace Invertor
             //if draging line, draw to mouse position
             if (secondLastPoint != null)
                 renderLineToMouse();
-            
+
             //draw snapping point -> just draw
+            Point a = pointSnapping(mousePoint.systemPoint);
+            if (a != null)
+            {
+                g.DrawRectangle(new Pen(colorDialog.Color, 5), new Rectangle(new System.Drawing.Point((int)(scale * a.X) + Origin.X, (int)(scale * a.Y) + Origin.Y), new Size(1, 1)));
+                mousePoint = a;
+            }
+
 
 
             //set drawing area as a drawn bitmap
@@ -210,15 +213,6 @@ namespace Invertor
         {
             Point mouse = new Point("", (int)((drawingArea.PointToClient(MousePosition).X - Origin.X) / scale), (int)((drawingArea.PointToClient(MousePosition).Y - Origin.Y) / scale));
             g.DrawLine(new Pen(lineColorPicture.BackColor, (int)lineThicknessValue.Value), new System.Drawing.Point((int)(scale * secondLastPoint.X) + Origin.X, (int)(scale * secondLastPoint.Y) + Origin.Y), new System.Drawing.Point((int)(mouse.X * scale) + Origin.X, (int)(mouse.Y * scale) + Origin.Y));
-        }
-
-        void pointSnappingRender()
-        {
-            /*Point a = pointSnapping(MousePosition);
-            if (a != null)
-            {
-
-            }*/
         }
 
         #endregion
@@ -377,12 +371,12 @@ namespace Invertor
 
         Point pointSnapping(System.Drawing.Point p)
         {
-            foreach (Point O in objectsInSketch)
+            foreach (Object O in objectsInSketch)
             {
                 if (O.GetType() == typeof(Point))
                 {
-                    if (isInDistancePoints(O.systemPoint, p, 10 / scale))
-                        return O;
+                    if (isInDistancePoints((O as Point).systemPoint, p, 10 / scale))
+                        return O as Point;
                 }
             }
             return null;

@@ -260,6 +260,7 @@
             this.objectListView.Name = "objectListView";
             this.objectListView.Size = new System.Drawing.Size(200, 504);
             this.objectListView.TabIndex = 0;
+            this.objectListView.ForeColor = System.Drawing.SystemColors.InfoText;
             // 
             // drawingAreaStatusStrip
             // 
