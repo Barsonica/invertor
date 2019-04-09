@@ -1,0 +1,38 @@
+/home/barsonica/Projects/C#/WinForms/Invertor/Invertor/bin/Debug/Invertor.exe.config
+/home/barsonica/Projects/C#/WinForms/Invertor/Invertor/bin/Debug/Invertor.exe
+/home/barsonica/Projects/C#/WinForms/Invertor/Invertor/bin/Debug/Invertor.pdb
+/home/barsonica/Projects/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.csprojAssemblyReference.cache
+/home/barsonica/Projects/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.MainWindow.resources
+/home/barsonica/Projects/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.Properties.Resources.resources
+/home/barsonica/Projects/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.csproj.GenerateResource.cache
+/home/barsonica/Projects/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.csproj.CoreCompileInputs.cache
+/home/barsonica/Projects/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.exe
+/home/barsonica/Projects/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.pdb
+H:/UPG/2018-2019/Invertor/Invertor/bin/Debug/Invertor.exe.config
+H:/UPG/2018-2019/Invertor/Invertor/obj/Debug/Invertor.exe
+H:/UPG/2018-2019/Invertor/Invertor/obj/Debug/Invertor.pdb
+H:/UPG/2018-2019/Invertor/Invertor/bin/Debug/Invertor.exe
+H:/UPG/2018-2019/Invertor/Invertor/bin/Debug/Invertor.pdb
+H:/UPG/2018-2019/Invertor/Invertor/obj/Debug/Invertor.MainWindow.resources
+H:/UPG/2018-2019/Invertor/Invertor/obj/Debug/Invertor.Properties.Resources.resources
+H:/UPG/2018-2019/Invertor/Invertor/obj/Debug/Invertor.csproj.GenerateResource.Cache
+C:/Users/Barsonica/Documents/Visual Studio 2015/Projects/Invertor/Invertor/bin/Debug/Invertor.exe.config
+C:/Users/Barsonica/Documents/Visual Studio 2015/Projects/Invertor/Invertor/obj/Debug/Invertor.exe
+C:/Users/Barsonica/Documents/Visual Studio 2015/Projects/Invertor/Invertor/obj/Debug/Invertor.pdb
+C:/Users/Barsonica/Documents/Visual Studio 2015/Projects/Invertor/Invertor/obj/Debug/Invertor.MainWindow.resources
+C:/Users/Barsonica/Documents/Visual Studio 2015/Projects/Invertor/Invertor/obj/Debug/Invertor.Properties.Resources.resources
+C:/Users/Barsonica/Documents/Visual Studio 2015/Projects/Invertor/Invertor/obj/Debug/Invertor.csproj.GenerateResource.Cache
+C:/Users/Barsonica/Documents/Visual Studio 2015/Projects/Invertor/Invertor/bin/Debug/Invertor.exe
+C:/Users/Barsonica/Documents/Visual Studio 2015/Projects/Invertor/Invertor/bin/Debug/Invertor.pdb
+C:/Users/Barsonica/Documents/Visual Studio 2015/Projects/Invertor/Invertor/obj/Debug/Invertor.csprojResolveAssemblyReference.cache
+H:/UPG/2018-2019/Invertor/Invertor/obj/Debug/Invertor.csprojResolveAssemblyReference.cache
+/Data/Projekty/C#/WinForms/Invertor/Invertor/bin/Debug/Invertor.exe.config
+/Data/Projekty/C#/WinForms/Invertor/Invertor/bin/Debug/Invertor.exe
+/Data/Projekty/C#/WinForms/Invertor/Invertor/bin/Debug/Invertor.pdb
+/Data/Projekty/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.csprojAssemblyReference.cache
+/Data/Projekty/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.MainWindow.resources
+/Data/Projekty/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.Properties.Resources.resources
+/Data/Projekty/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.csproj.GenerateResource.cache
+/Data/Projekty/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.csproj.CoreCompileInputs.cache
+/Data/Projekty/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.exe
+/Data/Projekty/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.pdb

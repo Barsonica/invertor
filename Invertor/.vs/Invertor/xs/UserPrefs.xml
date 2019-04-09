@@ -1,0 +1,18 @@
+﻿<Properties StartupConfiguration="{1A9F68B1-E557-4AB9-BFA5-DA5F666E904D}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MainWindow.Designer.cs">
+    <Files>
+      <File FileName="Line.cs" Line="73" Column="236" />
+      <File FileName="MainWindow.cs" Line="150" Column="1" />
+      <File FileName="Point.cs" Line="111" Column="150" />
+      <File FileName="Object.cs" Line="29" Column="84" />
+      <File FileName="MainWindow.Designer.cs" Line="218" Column="97" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Invertor PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
