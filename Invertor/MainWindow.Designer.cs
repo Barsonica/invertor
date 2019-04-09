@@ -260,14 +260,14 @@
             //
             // invertedDirectionCheckbox
             //
-            this.rectangleButton.Appearance = System.Windows.Forms.Appearance.Normal;
-            this.rectangleButton.AutoSize = false;
-            this.rectangleButton.Location = new System.Drawing.Point(123, 56);
-            this.rectangleButton.Name = "invertedDirectionCheckbox";
-            this.rectangleButton.Size = new System.Drawing.Size(37, 23);
-            this.rectangleButton.TabIndex = 1;
-            this.rectangleButton.Text = "Inverted key direction";
-            this.rectangleButton.UseVisualStyleBackColor = true;
+            this.invertedDirectionCheckbox.Appearance = System.Windows.Forms.Appearance.Normal;
+            this.invertedDirectionCheckbox.AutoSize = true;
+            this.invertedDirectionCheckbox.Location = new System.Drawing.Point(123, 56);
+            this.invertedDirectionCheckbox.Name = "invertedDirectionCheckbox";
+            this.invertedDirectionCheckbox.Size = new System.Drawing.Size(37, 23);
+            this.invertedDirectionCheckbox.TabIndex = 1;
+            this.invertedDirectionCheckbox.Text = "Inverted key direction";
+            this.invertedDirectionCheckbox.UseVisualStyleBackColor = true;
             // 
             // sidePanel1
             // 

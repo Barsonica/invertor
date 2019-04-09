@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 namespace Invertor
 {
+
     public partial class MainWindow : Form
     {
         List<Object> objectsInSketch;
@@ -140,7 +141,14 @@ namespace Invertor
                             addLine(firstLastPoint,secondLastPoint);
                             break;
                         case "rectangle":
-
+                            if (!objectsInSketch.Contains(firstLastPoint))
+                                objectsInSketch.Add(firstLastPoint);
+                            Point p0 = addPoint(new System.Drawing.Point(secondLastPoint.X,firstLastPoint.Y));
+                            addLine(firstLastPoint,p0);
+                            Point p1 = addPoint(new System.Drawing.Point(firstLastPoint.X, secondLastPoint.Y));
+                            addLine(firstLastPoint,p1);
+                            addLine(secondLastPoint,p0);
+                            addLine(secondLastPoint,p1);
                             break;
                             
                     }
@@ -224,6 +232,8 @@ namespace Invertor
                     g.DrawLine(new Pen(lineColorPicture.BackColor, (int)lineThicknessValue.Value), new System.Drawing.Point((int)(scale * secondLastPoint.X) + Origin.X, (int)(scale * secondLastPoint.Y) + Origin.Y), new System.Drawing.Point((int)(mousePoint.X * scale) + Origin.X, (int)(mousePoint.Y * scale) + Origin.Y));
                     break;
                 case "rectangle":
+                    Rectangle r = new Rectangle(Math.Min(((int)(scale * secondLastPoint.X) + Origin.X), mousePoint.X), Math.Min(((int)(scale * secondLastPoint.Y) + Origin.Y), mousePoint.Y), Math.Abs(mousePoint.X - secondLastPoint.X), Math.Abs(mousePoint.Y - secondLastPoint.Y));
+                    g.DrawRectangle(new Pen(lineColorPicture.BackColor, (int)lineThicknessValue.Value),r);
                     break;
             }
         }
@@ -302,7 +312,6 @@ namespace Invertor
 
             refreshObjectListView();   
         }
-        
 
         #region file operations
 
