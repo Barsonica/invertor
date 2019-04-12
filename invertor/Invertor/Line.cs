@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Invertor
 {
-    public class Line : Object
+     class Line : Object
     {
         private Point startPoint,endPoint;
         private int width;
@@ -53,10 +53,10 @@ namespace Invertor
                     case "Color":
                         Color = Color.FromArgb(int.Parse(values[1]));
                         break;
-                    case "StartPoint":
+                    case "startPoint":
                         startPoint = new Point(values[1].Trim(),0,0);
                         break;
-                    case "EndPoint":
+                    case "endPoint":
                         endPoint = new Point(values[1].Trim(), 0, 0);
                         break;
                 }
@@ -123,6 +123,7 @@ namespace Invertor
         {
             //if(inBitmap(b, origin, scale))
             g.DrawLine(new Pen(Color, Width), new System.Drawing.Point((int)(scale * startPoint.X) + origin.X, (int)(scale * startPoint.Y) + origin.Y), new System.Drawing.Point((int)(endPoint.X * scale) + origin.X, (int)(endPoint.Y * scale) + origin.Y));
+            
         }
 
         bool inBitmap(Bitmap bmp, Point origin, double scale)
@@ -136,15 +137,15 @@ namespace Invertor
 
         public override string ToString()
         {
-            return Name + ": " + StartPoint.Name + " - " + endPoint.Name;
+            return Name + " - " + StartPoint.Name + " - " + endPoint.Name;
         }
 
         public override string toJson()
         {
             string result = "";
             result += "Name:" + Name + ",";
-            result += "StartPoint:" +startPoint.Name + ",";
-            result += "EndPoint:" + endPoint.Name + ",";
+            result += "startPoint:" +startPoint.Name + ",";
+            result += "endPoint:" + endPoint.Name + ",";
             result += "Width:" + Width.ToString() + ",";
             result += "Color:" + color.ToArgb() + ",";
 

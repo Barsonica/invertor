@@ -39,14 +39,11 @@
             this.drawTapPage = new System.Windows.Forms.TabPage();
             this.lineButton = new System.Windows.Forms.CheckBox();
             this.rectangleButton = new System.Windows.Forms.CheckBox();
-            this.circleButton = new System.Windows.Forms.CheckBox();
             this.viewTabPage = new System.Windows.Forms.TabPage();
             this.originMovementStepLabel = new System.Windows.Forms.Label();
             this.scaleStepLabel = new System.Windows.Forms.Label();
-            this.fpsLabel = new System.Windows.Forms.Label();
             this.originMovementStepValue = new System.Windows.Forms.NumericUpDown();
             this.scaleStepValue = new System.Windows.Forms.NumericUpDown();
-            this.fpsValue = new System.Windows.Forms.NumericUpDown();
             this.invertedDirectionCheckbox = new System.Windows.Forms.CheckBox();
             this.sidePanel1 = new System.Windows.Forms.Panel();
             this.objectListView = new System.Windows.Forms.ListBox();
@@ -56,6 +53,7 @@
             this.scaleLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.scaleLabelValue = new System.Windows.Forms.ToolStripStatusLabel();
             this.drawingArea = new System.Windows.Forms.PictureBox();
+            this.renderTimer = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
@@ -161,7 +159,6 @@
             this.drawTapPage.Controls.Add(this.lineColorButton);
             this.drawTapPage.Controls.Add(this.lineButton);
             this.drawTapPage.Controls.Add(this.rectangleButton);
-            this.drawTapPage.Controls.Add(this.circleButton);
             this.drawTapPage.Location = new System.Drawing.Point(4, 22);
             this.drawTapPage.Name = "drawTapPage";
             this.drawTapPage.Padding = new System.Windows.Forms.Padding(3);
@@ -180,7 +177,7 @@
             this.lineButton.TabIndex = 1;
             this.lineButton.Text = "Line";
             this.lineButton.UseVisualStyleBackColor = true;
-            this.lineButton.CheckedChanged += new System.EventHandler(this.toolChecked);
+            this.lineButton.CheckedChanged += new System.EventHandler(this.lineButton_CheckedChanged);
             //
             // rectangleButton
             //
@@ -192,19 +189,7 @@
             this.rectangleButton.TabIndex = 1;
             this.rectangleButton.Text = "Rectangle";
             this.rectangleButton.UseVisualStyleBackColor = true;
-            this.rectangleButton.CheckedChanged += new System.EventHandler(this.toolChecked);
-            //
-            // circleButton
-            //
-            this.circleButton.Appearance = System.Windows.Forms.Appearance.Button;
-            this.circleButton.AutoSize = true;
-            this.circleButton.Location = new System.Drawing.Point(130, 46);
-            this.circleButton.Name = "circleButton";
-            this.circleButton.Size = new System.Drawing.Size(37, 23);
-            this.circleButton.TabIndex = 1;
-            this.circleButton.Text = "Circle";
-            this.circleButton.UseVisualStyleBackColor = true;
-            this.circleButton.CheckedChanged += new System.EventHandler(this.toolChecked);
+            this.rectangleButton.CheckedChanged += new System.EventHandler(this.rectangleButton_CheckedChanged);
             // 
             // viewTabPage
             // 
@@ -213,8 +198,6 @@
             this.viewTabPage.Controls.Add(this.originMovementStepValue);
             this.viewTabPage.Controls.Add(this.scaleStepValue);
             this.viewTabPage.Controls.Add(this.invertedDirectionCheckbox);
-            this.viewTabPage.Controls.Add(this.fpsLabel);
-            this.viewTabPage.Controls.Add(this.fpsValue);
             this.viewTabPage.Location = new System.Drawing.Point(4, 22);
             this.viewTabPage.Name = "viewTabPage";
             this.viewTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -240,15 +223,6 @@
             this.scaleStepLabel.Size = new System.Drawing.Size(57, 13);
             this.scaleStepLabel.TabIndex = 2;
             this.scaleStepLabel.Text = "Scale step";
-            // 
-            // fpsLabel
-            // 
-            this.fpsLabel.AutoSize = true;
-            this.fpsLabel.Location = new System.Drawing.Point(60, 70);
-            this.fpsLabel.Name = "fpsLabel";
-            this.fpsLabel.Size = new System.Drawing.Size(109, 13);
-            this.fpsLabel.TabIndex = 3;
-            this.fpsLabel.Text = "Render fps";
             // 
             // originMovementStepValue
             // 
@@ -283,24 +257,6 @@
             0,
             0,
             0});
-            // 
-            // fpsValue
-            // 
-            this.fpsValue.Location = new System.Drawing.Point(123, 70);
-            this.fpsValue.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.fpsValue.Maximum = 90;
-            this.fpsValue.Name = "originMovementStepValue";
-            this.fpsValue.Size = new System.Drawing.Size(73, 20);
-            this.fpsValue.TabIndex = 1;
-            this.fpsValue.Value = new decimal(new int[] {
-            25,
-            0,
-            0,
-            0});
             //
             // invertedDirectionCheckbox
             //
@@ -332,7 +288,6 @@
             this.objectListView.Size = new System.Drawing.Size(200, 504);
             this.objectListView.TabIndex = 0;
             this.objectListView.ForeColor = System.Drawing.SystemColors.InfoText;
-            this.objectListView.DoubleClick += new System.EventHandler(objectListView_DoubleClick);
             // 
             // drawingAreaStatusStrip
             // 
@@ -380,7 +335,11 @@
             this.drawingArea.TabIndex = 3;
             this.drawingArea.TabStop = false;
             this.drawingArea.Click += new System.EventHandler(this.drawingArea_Click);
-            this.drawingArea.MouseMove += new System.Windows.Forms.MouseEventHandler(this.drawingArea_MouseMove);
+            // 
+            // renderTimer
+            // 
+            this.renderTimer.Interval = 40;
+            this.renderTimer.Tick += new System.EventHandler(this.renderTimer_Tick);
             // 
             // openFileDialog
             // 
@@ -480,7 +439,6 @@
         private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.CheckBox lineButton;
         private System.Windows.Forms.CheckBox rectangleButton;
-        private System.Windows.Forms.CheckBox circleButton;
         private System.Windows.Forms.TabControl topRibbonTab;
         private System.Windows.Forms.TabPage fileTabPage;
         private System.Windows.Forms.Button fileSaveAsButton;
@@ -493,23 +451,22 @@
         private System.Windows.Forms.StatusStrip drawingAreaStatusStrip;
         private System.Windows.Forms.ToolStripStatusLabel secondLastPointLabel;
         private System.Windows.Forms.ToolStripStatusLabel secondLastPointLabelValue;
-        public System.Windows.Forms.PictureBox drawingArea;
+        private System.Windows.Forms.PictureBox drawingArea;
+        private System.Windows.Forms.Timer renderTimer;
         private System.Windows.Forms.ToolStripStatusLabel scaleLabel;
         private System.Windows.Forms.ToolStripStatusLabel scaleLabelValue;
         private System.Windows.Forms.TabPage viewTabPage;
         private System.Windows.Forms.Label originMovementStepLabel;
         private System.Windows.Forms.Label scaleStepLabel;
-        private System.Windows.Forms.Label fpsLabel;
         private System.Windows.Forms.NumericUpDown originMovementStepValue;
         private System.Windows.Forms.NumericUpDown scaleStepValue;
-        private System.Windows.Forms.NumericUpDown fpsValue;
         private System.Windows.Forms.CheckBox invertedDirectionCheckbox;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
-        public System.Windows.Forms.PictureBox lineColorPicture;
+        private System.Windows.Forms.PictureBox lineColorPicture;
         private System.Windows.Forms.Button lineColorButton;
-        public System.Windows.Forms.ColorDialog colorDialog;
-        public System.Windows.Forms.NumericUpDown lineThicknessValue;
+        private System.Windows.Forms.ColorDialog colorDialog;
+        private System.Windows.Forms.NumericUpDown lineThicknessValue;
         private System.Windows.Forms.Label lineThicknessLabel;
     }
 }

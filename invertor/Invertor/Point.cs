@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Invertor
 {
-    public class Point : Object
+    class Point : Object
     {
         int x, y, size;
         Color color = Color.White;
@@ -62,6 +62,10 @@ namespace Invertor
                 }
             }
 
+            /*string[] splitted = file.Split(' ');
+            Name = splitted[0];
+            X = int.Parse(splitted[2]);
+            Y = int.Parse(splitted[5]);*/
         }
 
         #region getters and setters
@@ -134,11 +138,6 @@ namespace Invertor
 
         #endregion
 
-        public double distance(Point p0)
-        {
-            return Math.Sqrt(Math.Abs(((X-p0.X) * (X - p0.X)) + ((Y-p0.Y) * (Y-p0.Y))));
-        }
-
         public override void Render(Graphics g, Bitmap b, Point origin, double scale)
         {
             if (Name != "Origin")
@@ -149,7 +148,7 @@ namespace Invertor
 
         public override string ToString()
         {
-            return Name + ": X: " + X + " , Y: " + Y;
+            return Name + " X: " + X + " , Y: " + Y;
         }
 
         public override string toJson()

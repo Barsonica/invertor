@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Invertor
 {
-    public abstract class Object
+    abstract class Object
     {
         string name;
 

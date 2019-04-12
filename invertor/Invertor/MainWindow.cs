@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.IO;
 using System.Xml.Serialization;
-using System.Threading;
 
 namespace Invertor
 {
@@ -18,14 +17,12 @@ namespace Invertor
     public partial class MainWindow : Form
     {
         List<Object> objectsInSketch;
+        
+        Point firstLastPoint, secondLastPoint, Origin;
 
-        Point firstLastPoint, secondLastPoint, origin;
-        double scale = 1;
-
+        Bitmap bmp;
         Graphics g;
-        Bitmap bmp = new Bitmap(2000, 2000);
-        Thread renderThread;
-        System.Windows.Forms.Timer renderTimer = new System.Windows.Forms.Timer();
+        double scale = 1;
 
         string selectedTool = "";
         List<object> toolControlsList = new List<object>();
@@ -35,13 +32,12 @@ namespace Invertor
         {
             InitializeComponent();
 
-            renderThread = new Thread(renderCycle);
-            g = Graphics.FromImage(bmp);
+            bmp = new Bitmap(2000, 2000);
 
             // list of all objects
             objectsInSketch = new List<Object>();
-            origin = new Point("origin", 0, 0, 3);
-            objectsInSketch.Add(origin);
+            Origin = new Point("Origin", 0, 0, 3);
+            objectsInSketch.Add(Origin);
             refreshObjectListView();
 
             //last selected points on screen
@@ -50,8 +46,6 @@ namespace Invertor
 
             //add all tool controls to the list
             toolControlsList.Add(lineButton);
-            toolControlsList.Add(rectangleButton);
-            toolControlsList.Add(circleButton);
 
             //reset point
             secondLastPointLabelValue.Text = "";
@@ -63,23 +57,31 @@ namespace Invertor
             saveFileDialog.Filter = "vector files (*.vec)|*.inv|All files (*.*)|*.*";
             openFileDialog.Filter = "vector files (*.vec)|*.inv";
 
-            renderThread.Start();
+            renderTimer.Start();
 
         }
 
         #region toolControl
 
-        private void toolChecked(object sender,  EventArgs e)
+        private void lineButton_CheckedChanged(object sender, EventArgs e)
         {
-            CheckBox pressed = sender as CheckBox;
-            if (pressed.Checked)
+            if (lineButton.Checked)
             {
-                resetselectedTool(pressed);
-                selectedTool = pressed.Text.ToLower();
+                resetSelectedTool(lineButton);
+                selectedTool = "line";
             }
         }
 
-        void resetselectedTool(CheckBox sender)
+        private void rectangleButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rectangleButton.Checked)
+            {
+                resetSelectedTool(rectangleButton);
+                selectedTool = "rectangle";
+            }
+        }
+
+        void resetSelectedTool(CheckBox sender)
         {
             foreach(CheckBox o in toolControlsList)
             {
@@ -125,10 +127,7 @@ namespace Invertor
                 {
                     secondLastPoint = firstLastPoint;
                     firstLastPoint = null;
-                    if (pointSnapping(secondLastPoint.systemPoint) == null)
-                        objectsInSketch.Add(secondLastPoint);
-                    else
-                        secondLastPoint = pointSnapping(secondLastPoint.systemPoint);
+                    objectsInSketch.Add(secondLastPoint);
 
                 }
                 else
@@ -136,6 +135,7 @@ namespace Invertor
                     switch (selectedTool) //tool switch
                     {
                         case "line":
+                            //firstLastPoint = addPoint(firstLastPoint.systemPoint);
                             if(!objectsInSketch.Contains(firstLastPoint))
                                 objectsInSketch.Add(firstLastPoint);
                             addLine(firstLastPoint,secondLastPoint);
@@ -150,16 +150,11 @@ namespace Invertor
                             addLine(secondLastPoint,p0);
                             addLine(secondLastPoint,p1);
                             break;
-                        case "circle":
-                            addCircle(secondLastPoint,firstLastPoint.distance(secondLastPoint));
-                            break;
+                            
                     }
 
-                    //if tool require it, set last point to second one
-                    if (selectedTool == "line")
-                        secondLastPoint = firstLastPoint;
-                    else
-                        secondLastPoint = null;
+                    //set last point to second one
+                    secondLastPoint = firstLastPoint;
                     firstLastPoint = null;
                 }
             }
@@ -191,35 +186,16 @@ namespace Invertor
             objectsInSketch.Add(new Line("line" + countObjectsOfType(typeof(Line)), start, end, (int)lineThicknessValue.Value,lineColorPicture.BackColor));
         }
 
-        void addCircle(Point center,double radius)
-        {
-            objectsInSketch.Add(new Circle("circle" + countObjectsOfType(typeof(Circle)),center,radius,colorDialog.Color));
-        }
-
-        private void objectListView_DoubleClick(object sender, EventArgs e)
-        {
-            IEnumerable<Object> o = objectsInSketch.Where(c => c.Name == objectListView.SelectedItem.ToString().Split(':')[0]);
-            //show the edit panel with o.first as object of interest
-        }
-
         #endregion
 
-        private void drawingArea_MouseMove(object sender, MouseEventArgs e)
-        {
-            mousePoint = new Point("point" + countObjectsOfType(typeof(Point)).ToString(), (int)((drawingArea.PointToClient(MousePosition).X - origin.X) / scale), (int)((drawingArea.PointToClient(MousePosition).Y - origin.Y) / scale));
-        }
-
         #region rendering
-
-        public void renderCycle()
+        
+        //render loop
+        private void renderTimer_Tick(object sender, EventArgs e)
         {
-            renderTimer.Interval = (int)(1000/fpsValue.Value);
-            renderTimer.Tick += new EventHandler(render);
-            renderTimer.Start();
-        }
+            //get mouse position before any adjustments
+            mousePoint = new Point("point" + countObjectsOfType(typeof(Point)).ToString(), (int)((drawingArea.PointToClient(MousePosition).X - Origin.X) / scale), (int)((drawingArea.PointToClient(MousePosition).Y - Origin.Y) / scale));
 
-        void render(object sender, EventArgs e)
-        {
             //declare new bitmap  and graphics
             g = Graphics.FromImage(bmp);
             g.Clear(Color.Transparent);
@@ -228,14 +204,14 @@ namespace Invertor
             //draw all objects
             foreach (Object O in objectsInSketch)
             {
-                O.Render(g, bmp, origin, scale);
+                O.Render(g, bmp, Origin, scale);
             }
 
             //draw snapping point -> just draw
             Point a = pointSnapping(mousePoint.systemPoint);
             if (a != null)
             {
-                g.DrawRectangle(new Pen(colorDialog.Color, 5), new Rectangle(new System.Drawing.Point((int)(scale * a.X) + origin.X, (int)(scale * a.Y) + origin.Y), new Size(1, 1)));
+                g.DrawRectangle(new Pen(colorDialog.Color, 5), new Rectangle(new System.Drawing.Point((int)(scale * a.X) + Origin.X, (int)(scale * a.Y) + Origin.Y), new Size(1, 1)));
                 mousePoint = a;
             }
 
@@ -244,48 +220,23 @@ namespace Invertor
                 renderDraging();
 
             //set drawing area as a drawn bitmap
-
             drawingArea.Image = bmp;
-            //update fps counter
-            renderTimer.Interval = (int)(1000 / fpsValue.Value);
         }
-
+        
+        //render active line to mouse
         void renderDraging()
         {
             switch (selectedTool)
             {
                 case "line":
-                    g.DrawLine(new Pen(lineColorPicture.BackColor, (int)lineThicknessValue.Value), new System.Drawing.Point((int)(scale * secondLastPoint.X) + origin.X, (int)(scale * secondLastPoint.Y) + origin.Y), new System.Drawing.Point((int)(mousePoint.X * scale) + origin.X, (int)(mousePoint.Y * scale) + origin.Y));
+                    g.DrawLine(new Pen(lineColorPicture.BackColor, (int)lineThicknessValue.Value), new System.Drawing.Point((int)(scale * secondLastPoint.X) + Origin.X, (int)(scale * secondLastPoint.Y) + Origin.Y), new System.Drawing.Point((int)(mousePoint.X * scale) + Origin.X, (int)(mousePoint.Y * scale) + Origin.Y));
                     break;
                 case "rectangle":
-                    Rectangle r = new Rectangle(Math.Min(((int)(scale * secondLastPoint.X) + origin.X), mousePoint.X), Math.Min(((int)(scale * secondLastPoint.Y) + origin.Y), mousePoint.Y), Math.Abs(mousePoint.X - secondLastPoint.X), Math.Abs(mousePoint.Y - secondLastPoint.Y));
-                    g.DrawRectangle(new Pen(lineColorPicture.BackColor, (int)lineThicknessValue.Value), r);
-                    break;
-                case "circle":
-                    int Diameter = (int)mousePoint.distance(secondLastPoint);
-                    g.DrawEllipse(new Pen(lineColorPicture.BackColor), new Rectangle(new System.Drawing.Point((int)(scale * (secondLastPoint.X - Diameter)) + origin.X, (int)(scale * (secondLastPoint.Y - Diameter)) + origin.Y), new Size((int)(Diameter + Diameter), (int)(Diameter + Diameter))));
+                    Rectangle r = new Rectangle(Math.Min(((int)(scale * secondLastPoint.X) + Origin.X), mousePoint.X), Math.Min(((int)(scale * secondLastPoint.Y) + Origin.Y), mousePoint.Y), Math.Abs(mousePoint.X - secondLastPoint.X), Math.Abs(mousePoint.Y - secondLastPoint.Y));
+                    g.DrawRectangle(new Pen(lineColorPicture.BackColor, (int)lineThicknessValue.Value),r);
                     break;
             }
         }
-
-        Point pointSnapping(System.Drawing.Point p)
-        {
-            foreach (Object O in objectsInSketch)
-            {
-                if (O.GetType() == typeof(Point))
-                {
-                    if (isInDistancePoints((O as Point).systemPoint, p, 10 / scale))
-                        return O as Point;
-                }
-            }
-            return null;
-        }
-
-        bool isInDistancePoints(System.Drawing.Point pointA, System.Drawing.Point pointB, double maxDistance)
-        {
-            return ((pointA.X - pointB.X) * (pointA.X - pointB.X) + (pointA.Y - pointB.Y) * (pointA.Y - pointB.Y)) < maxDistance * maxDistance;
-        }
-
 
         #endregion
 
@@ -325,14 +276,8 @@ namespace Invertor
                     case Keys.L:
                         toggleTool(lineButton);
                         break;
-                    case Keys.R:
-                        toggleTool(rectangleButton);
-                        break;
-                    case Keys.C:
-                        toggleTool(circleButton);
-                        break;
                     case Keys.Escape:
-                        resetselectedTool(null);
+                        resetSelectedTool(null);
                         break;
                     case Keys.Enter:
                         firstLastPoint = null;
@@ -340,27 +285,27 @@ namespace Invertor
                         break;
                     case Keys.Up:
                         if(invertedDirectionCheckbox.Checked)
-                            origin.Y += (int)((double)originMovementStepValue.Value * scale);
+                            Origin.Y += (int)((double)originMovementStepValue.Value * scale);
                         else
-                            origin.Y -= (int)((double)originMovementStepValue.Value * scale);
+                            Origin.Y -= (int)((double)originMovementStepValue.Value * scale);
                         break;
                     case Keys.Down:
                         if (invertedDirectionCheckbox.Checked)
-                            origin.Y -= (int)((double)originMovementStepValue.Value * scale);
+                            Origin.Y -= (int)((double)originMovementStepValue.Value * scale);
                         else
-                            origin.Y += (int)((double)originMovementStepValue.Value * scale);
+                            Origin.Y += (int)((double)originMovementStepValue.Value * scale);
                         break;
                     case Keys.Left:
                         if (invertedDirectionCheckbox.Checked)
-                            origin.X += (int)((double)originMovementStepValue.Value * scale);
+                            Origin.X += (int)((double)originMovementStepValue.Value * scale);
                         else
-                            origin.X -= (int)((double)originMovementStepValue.Value * scale);
+                            Origin.X -= (int)((double)originMovementStepValue.Value * scale);
                         break;
                     case Keys.Right:
                         if (invertedDirectionCheckbox.Checked)
-                            origin.X -= (int)((double)originMovementStepValue.Value * scale);
+                            Origin.X -= (int)((double)originMovementStepValue.Value * scale);
                         else
-                            origin.X += (int)((double)originMovementStepValue.Value * scale);
+                            Origin.X += (int)((double)originMovementStepValue.Value * scale);
                         break;
                 }
             }
@@ -397,19 +342,15 @@ namespace Invertor
 
             for (int i = 0; i < lines.Length - 1; i++)
             {
-                if (lines[i].Split('{')[0] == "Point")
+                switch (lines[i].Split('{')[0])
                 {
-                    Point p = new Point(lines[i].Split('{')[1].Split('}')[0]);
-                    objectsInSketch.Add(p);
-                    if (p.Name == "origin")
-                        origin = p;
-                }
-
-            }
-            for (int i = 0; i < lines.Length - 1; i++)
-            {
-                if (lines[i].Split('{')[0] == "Line")
-                {
+                    case "Point":
+                        Point p = new Point(lines[i].Split('{')[1].Split('}')[0]);
+                        objectsInSketch.Add(p);
+                        if (p.Name == "Origin")
+                            Origin = p;
+                        break;
+                    case "Line":
                         Line l = new Line(lines[i].Split('{')[1].Split('}')[0]);
 
                         Object p0 = objectsInSketch.Where(x => x.Name == l.StartPoint.Name).First();
@@ -418,10 +359,10 @@ namespace Invertor
                         l.StartPoint = p0 as Point;
                         l.EndPoint = p1 as Point;
 
-                    objectsInSketch.Add(l);
-                    }
+                        objectsInSketch.Add(l);
+                        break;
                 }
-            
+            }
             refreshObjectListView();
         }
 
@@ -436,8 +377,8 @@ namespace Invertor
         private void fileNewButton_Click(object sender, EventArgs e)
         {
             objectsInSketch.Clear();
-            origin = new Point("origin", 0, 0, 3);
-            objectsInSketch.Add(origin);
+            Origin = new Point("Origin", 0, 0, 3);
+            objectsInSketch.Add(Origin);
             refreshObjectListView();
 
             //last selected points on screen
@@ -456,7 +397,23 @@ namespace Invertor
 
         #endregion
 
-        #region info
+        IEnumerable<Object> findClass(Object @class)
+        {
+            return objectsInSketch.Where(c => c.GetType() == @class.GetType());
+        }
+
+        Point pointSnapping(System.Drawing.Point p)
+        {
+            foreach (Object O in objectsInSketch)
+            {
+                if (O.GetType() == typeof(Point))
+                {
+                    if (isInDistancePoints((O as Point).systemPoint, p, 10 / scale))
+                        return O as Point;
+                }
+            }
+            return null;
+        }
 
         void refreshLabels()
         {
@@ -470,13 +427,6 @@ namespace Invertor
                 objectListView.Items.Add(O);
         }
 
-        #endregion
-
-        IEnumerable<Object> findClass(Object @class)
-        {
-            return objectsInSketch.Where(c => c.GetType() == @class.GetType());
-        }
-
         int countObjectsOfType(Type t)
         {
             int count = 0;
@@ -486,6 +436,11 @@ namespace Invertor
                     count++;
             }
             return count;
+        }
+
+        bool isInDistancePoints(System.Drawing.Point pointA, System.Drawing.Point pointB, double maxDistance)
+        {
+            return ((pointA.X - pointB.X) * (pointA.X - pointB.X) + (pointA.Y - pointB.Y) * (pointA.Y - pointB.Y)) < maxDistance * maxDistance;
         }
 
     }

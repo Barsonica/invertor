@@ -79,7 +79,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ObjectGroup.cs" />
-    <Compile Include="Circle.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
