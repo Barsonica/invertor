@@ -36,3 +36,12 @@ H:/UPG/2018-2019/Invertor/Invertor/obj/Debug/Invertor.csprojResolveAssemblyRefer
 /Data/Projekty/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.csproj.CoreCompileInputs.cache
 /Data/Projekty/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.exe
 /Data/Projekty/C#/WinForms/Invertor/Invertor/obj/Debug/Invertor.pdb
+D:/Projekty/C#/WinForms/invertor/Invertor/bin/Debug/Invertor.exe.config
+D:/Projekty/C#/WinForms/invertor/Invertor/obj/Debug/Invertor.exe
+D:/Projekty/C#/WinForms/invertor/Invertor/obj/Debug/Invertor.pdb
+D:/Projekty/C#/WinForms/invertor/Invertor/bin/Debug/Invertor.exe
+D:/Projekty/C#/WinForms/invertor/Invertor/bin/Debug/Invertor.pdb
+D:/Projekty/C#/WinForms/invertor/Invertor/obj/Debug/Invertor.csprojResolveAssemblyReference.cache
+D:/Projekty/C#/WinForms/invertor/Invertor/obj/Debug/Invertor.MainWindow.resources
+D:/Projekty/C#/WinForms/invertor/Invertor/obj/Debug/Invertor.Properties.Resources.resources
+D:/Projekty/C#/WinForms/invertor/Invertor/obj/Debug/Invertor.csproj.GenerateResource.Cache

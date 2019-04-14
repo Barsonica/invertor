@@ -69,7 +69,7 @@ namespace Invertor
 
         #region toolControl
 
-        private void toolChecked(object sender,  EventArgs e)
+        private void toolChecked(object sender, EventArgs e)
         {
             CheckBox pressed = sender as CheckBox;
             if (pressed.Checked)
@@ -81,9 +81,9 @@ namespace Invertor
 
         void resetselectedTool(CheckBox sender)
         {
-            foreach(CheckBox o in toolControlsList)
+            foreach (CheckBox o in toolControlsList)
             {
-                if(o != sender)
+                if (o != sender)
                     o.Checked = false;
             }
             selectedTool = "";
@@ -105,7 +105,7 @@ namespace Invertor
                 tool.Checked = true;
                 selectedTool = tool.Text.ToLower();
             }
-                
+
         }
 
         #endregion
@@ -116,7 +116,7 @@ namespace Invertor
         {
             drawingArea.Focus();
 
-            if(selectedTool != "")
+            if (selectedTool != "")
             {
                 //use the mouse point in order to allow point snapping
                 firstLastPoint = mousePoint;
@@ -136,22 +136,22 @@ namespace Invertor
                     switch (selectedTool) //tool switch
                     {
                         case "line":
-                            if(!objectsInSketch.Contains(firstLastPoint))
+                            if (!objectsInSketch.Contains(firstLastPoint))
                                 objectsInSketch.Add(firstLastPoint);
-                            addLine(firstLastPoint,secondLastPoint);
+                            addLine(firstLastPoint, secondLastPoint);
                             break;
                         case "rectangle":
                             if (!objectsInSketch.Contains(firstLastPoint))
                                 objectsInSketch.Add(firstLastPoint);
-                            Point p0 = addPoint(new System.Drawing.Point(secondLastPoint.X,firstLastPoint.Y));
-                            addLine(firstLastPoint,p0);
+                            Point p0 = addPoint(new System.Drawing.Point(secondLastPoint.X, firstLastPoint.Y));
+                            addLine(firstLastPoint, p0);
                             Point p1 = addPoint(new System.Drawing.Point(firstLastPoint.X, secondLastPoint.Y));
-                            addLine(firstLastPoint,p1);
-                            addLine(secondLastPoint,p0);
-                            addLine(secondLastPoint,p1);
+                            addLine(firstLastPoint, p1);
+                            addLine(secondLastPoint, p0);
+                            addLine(secondLastPoint, p1);
                             break;
                         case "circle":
-                            addCircle(secondLastPoint,firstLastPoint.distance(secondLastPoint));
+                            addCircle(secondLastPoint, firstLastPoint.distance(secondLastPoint));
                             break;
                     }
 
@@ -163,7 +163,7 @@ namespace Invertor
                     firstLastPoint = null;
                 }
             }
-            
+
             refreshObjectListView();
 
             //set point label
@@ -171,6 +171,16 @@ namespace Invertor
                 secondLastPointLabelValue.Text = secondLastPoint.ToString();
             else
                 secondLastPointLabelValue.Text = "";
+        }
+
+        private void drawingArea_MouseUp(object sender, EventArgs e)
+        {
+
+        }
+
+        private void selectBackColorButton_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void lineColorButton_Click(object sender, EventArgs e)
@@ -188,12 +198,12 @@ namespace Invertor
 
         void addLine(Point start, Point end)
         {
-            objectsInSketch.Add(new Line("line" + countObjectsOfType(typeof(Line)), start, end, (int)lineThicknessValue.Value,lineColorPicture.BackColor));
+            objectsInSketch.Add(new Line("line" + countObjectsOfType(typeof(Line)), start, end, (int)lineThicknessValue.Value, lineColorPicture.BackColor));
         }
 
-        void addCircle(Point center,double radius)
+        void addCircle(Point center, double radius)
         {
-            objectsInSketch.Add(new Circle("circle" + countObjectsOfType(typeof(Circle)),center,radius,colorDialog.Color));
+            objectsInSketch.Add(new Circle("circle" + countObjectsOfType(typeof(Circle)), center, radius, colorDialog.Color));
         }
 
         private void objectListView_DoubleClick(object sender, EventArgs e)
@@ -213,7 +223,7 @@ namespace Invertor
 
         public void renderCycle()
         {
-            renderTimer.Interval = (int)(1000/fpsValue.Value);
+            renderTimer.Interval = (int)(1000 / fpsValue.Value);
             renderTimer.Tick += new EventHandler(render);
             renderTimer.Start();
         }
@@ -292,19 +302,19 @@ namespace Invertor
         //keybinding
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if(Control.ModifierKeys == Keys.Control)
+            if (Control.ModifierKeys == Keys.Control)
             {//cotrol + 
                 switch (e.KeyCode)
                 {
                     case Keys.Add:
-                        scale+=(double)(scaleStepValue.Value/100);
+                        scale += (double)(scaleStepValue.Value / 100);
                         refreshLabels();
                         break;
                     case Keys.Subtract:
                         if (scale > 0.2)
                             scale -= (double)(scaleStepValue.Value / 100);
                         else
-                            scale/=1.5;
+                            scale /= 1.5;
                         refreshLabels();
                         break;
                     case Keys.S:
@@ -339,7 +349,7 @@ namespace Invertor
                         secondLastPoint = null;
                         break;
                     case Keys.Up:
-                        if(invertedDirectionCheckbox.Checked)
+                        if (invertedDirectionCheckbox.Checked)
                             origin.Y += (int)((double)originMovementStepValue.Value * scale);
                         else
                             origin.Y -= (int)((double)originMovementStepValue.Value * scale);
@@ -365,7 +375,7 @@ namespace Invertor
                 }
             }
 
-            refreshObjectListView();   
+            refreshObjectListView();
         }
 
         #region file operations
@@ -410,18 +420,18 @@ namespace Invertor
             {
                 if (lines[i].Split('{')[0] == "Line")
                 {
-                        Line l = new Line(lines[i].Split('{')[1].Split('}')[0]);
+                    Line l = new Line(lines[i].Split('{')[1].Split('}')[0]);
 
-                        Object p0 = objectsInSketch.Where(x => x.Name == l.StartPoint.Name).First();
-                        Object p1 = objectsInSketch.Where(x => x.Name == l.EndPoint.Name).First();
+                    Object p0 = objectsInSketch.Where(x => x.Name == l.StartPoint.Name).First();
+                    Object p1 = objectsInSketch.Where(x => x.Name == l.EndPoint.Name).First();
 
-                        l.StartPoint = p0 as Point;
-                        l.EndPoint = p1 as Point;
+                    l.StartPoint = p0 as Point;
+                    l.EndPoint = p1 as Point;
 
                     objectsInSketch.Add(l);
-                    }
                 }
-            
+            }
+
             refreshObjectListView();
         }
 
@@ -430,7 +440,7 @@ namespace Invertor
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 saveJson(saveFileDialog.FileName);
 
-            
+
         }
 
         private void fileNewButton_Click(object sender, EventArgs e)
@@ -480,7 +490,7 @@ namespace Invertor
         int countObjectsOfType(Type t)
         {
             int count = 0;
-            foreach(Object O in objectsInSketch)
+            foreach (Object O in objectsInSketch)
             {
                 if (O.GetType() == t)
                     count++;

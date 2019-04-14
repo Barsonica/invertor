@@ -1,13 +1,13 @@
 ﻿<Properties StartupConfiguration="{1A9F68B1-E557-4AB9-BFA5-DA5F666E904D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Invertor/MainWindow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Invertor/MainWindow.Designer.cs">
     <Files>
-      <File FileName="Invertor/MainWindow.cs" Line="204" Column="9" />
+      <File FileName="Invertor/MainWindow.cs" Line="176" Column="21" />
       <File FileName="Invertor/Line.cs" Line="139" Column="29" />
-      <File FileName="Invertor/Point.cs" Line="152" Column="29" />
+      <File FileName="Invertor/Point.cs" Line="152" Column="10" />
       <File FileName="Invertor/Object.cs" Line="12" Column="12" />
-      <File FileName="Invertor/MainWindow.Designer.cs" Line="337" Column="38" />
+      <File FileName="Invertor/MainWindow.Designer.cs" Line="453" Column="72" />
       <File FileName="Invertor/ObjectGroup.cs" Line="24" Column="25" />
-      <File FileName="Invertor/Circle.cs" Line="57" Column="32" />
+      <File FileName="Invertor/Circle.cs" Line="57" Column="14" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.Invertor PreferredExecutionTarget="MonoDevelop.Default" />

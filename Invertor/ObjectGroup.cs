@@ -18,13 +18,28 @@ namespace Invertor
         List<Object> objects = new List<Object>();
 
         private string name = "";
-
+        
         public ObjectGroup(string name)
         {
             Name = name;
         }
 
-        public string Name { get => name; set => name = value; }
+        #region getters  and setters
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+
+            set
+            {
+                name = value;
+            }
+        }
+
+        #endregion
 
     }
 }

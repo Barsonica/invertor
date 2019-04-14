@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.topPanel = new System.Windows.Forms.Panel();
             this.topRibbonTab = new System.Windows.Forms.TabControl();
             this.fileTabPage = new System.Windows.Forms.TabPage();
@@ -37,17 +36,23 @@
             this.fileOpenButton = new System.Windows.Forms.Button();
             this.fileNewButton = new System.Windows.Forms.Button();
             this.drawTapPage = new System.Windows.Forms.TabPage();
+            this.lineThicknessValue = new System.Windows.Forms.NumericUpDown();
+            this.lineThicknessLabel = new System.Windows.Forms.Label();
+            this.lineColorPicture = new System.Windows.Forms.PictureBox();
+            this.lineColorButton = new System.Windows.Forms.Button();
             this.lineButton = new System.Windows.Forms.CheckBox();
             this.rectangleButton = new System.Windows.Forms.CheckBox();
             this.circleButton = new System.Windows.Forms.CheckBox();
             this.viewTabPage = new System.Windows.Forms.TabPage();
+            this.selectBackColorButton = new System.Windows.Forms.Button();
+            this.selectBackColor = new System.Windows.Forms.PictureBox();
             this.originMovementStepLabel = new System.Windows.Forms.Label();
             this.scaleStepLabel = new System.Windows.Forms.Label();
-            this.fpsLabel = new System.Windows.Forms.Label();
             this.originMovementStepValue = new System.Windows.Forms.NumericUpDown();
             this.scaleStepValue = new System.Windows.Forms.NumericUpDown();
-            this.fpsValue = new System.Windows.Forms.NumericUpDown();
             this.invertedDirectionCheckbox = new System.Windows.Forms.CheckBox();
+            this.fpsLabel = new System.Windows.Forms.Label();
+            this.fpsValue = new System.Windows.Forms.NumericUpDown();
             this.sidePanel1 = new System.Windows.Forms.Panel();
             this.objectListView = new System.Windows.Forms.ListBox();
             this.drawingAreaStatusStrip = new System.Windows.Forms.StatusStrip();
@@ -59,22 +64,20 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.lineColorButton = new System.Windows.Forms.Button();
-            this.lineColorPicture = new System.Windows.Forms.PictureBox();
-            this.lineThicknessLabel = new System.Windows.Forms.Label();
-            this.lineThicknessValue = new System.Windows.Forms.NumericUpDown();
             this.topPanel.SuspendLayout();
             this.topRibbonTab.SuspendLayout();
             this.fileTabPage.SuspendLayout();
             this.drawTapPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lineThicknessValue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lineColorPicture)).BeginInit();
             this.viewTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.selectBackColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.originMovementStepValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scaleStepValue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fpsValue)).BeginInit();
             this.sidePanel1.SuspendLayout();
             this.drawingAreaStatusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.drawingArea)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lineColorPicture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lineThicknessValue)).BeginInit();
             this.SuspendLayout();
             // 
             // topPanel
@@ -155,13 +158,13 @@
             // 
             // drawTapPage
             // 
+            this.drawTapPage.Controls.Add(this.circleButton);
+            this.drawTapPage.Controls.Add(this.rectangleButton);
+            this.drawTapPage.Controls.Add(this.lineButton);
             this.drawTapPage.Controls.Add(this.lineThicknessValue);
             this.drawTapPage.Controls.Add(this.lineThicknessLabel);
             this.drawTapPage.Controls.Add(this.lineColorPicture);
             this.drawTapPage.Controls.Add(this.lineColorButton);
-            this.drawTapPage.Controls.Add(this.lineButton);
-            this.drawTapPage.Controls.Add(this.rectangleButton);
-            this.drawTapPage.Controls.Add(this.circleButton);
             this.drawTapPage.Location = new System.Drawing.Point(4, 22);
             this.drawTapPage.Name = "drawTapPage";
             this.drawTapPage.Padding = new System.Windows.Forms.Padding(3);
@@ -170,37 +173,83 @@
             this.drawTapPage.Text = "Draw";
             this.drawTapPage.UseVisualStyleBackColor = true;
             // 
+            // lineThicknessValue
+            // 
+            this.lineThicknessValue.Location = new System.Drawing.Point(245, 9);
+            this.lineThicknessValue.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.lineThicknessValue.Name = "lineThicknessValue";
+            this.lineThicknessValue.Size = new System.Drawing.Size(35, 20);
+            this.lineThicknessValue.TabIndex = 5;
+            this.lineThicknessValue.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // lineThicknessLabel
+            // 
+            this.lineThicknessLabel.AutoSize = true;
+            this.lineThicknessLabel.Location = new System.Drawing.Point(183, 11);
+            this.lineThicknessLabel.Name = "lineThicknessLabel";
+            this.lineThicknessLabel.Size = new System.Drawing.Size(56, 13);
+            this.lineThicknessLabel.TabIndex = 4;
+            this.lineThicknessLabel.Text = "Thickness";
+            // 
+            // lineColorPicture
+            // 
+            this.lineColorPicture.BackColor = System.Drawing.Color.White;
+            this.lineColorPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lineColorPicture.Location = new System.Drawing.Point(196, 35);
+            this.lineColorPicture.Name = "lineColorPicture";
+            this.lineColorPicture.Size = new System.Drawing.Size(78, 23);
+            this.lineColorPicture.TabIndex = 3;
+            this.lineColorPicture.TabStop = false;
+            // 
+            // lineColorButton
+            // 
+            this.lineColorButton.Location = new System.Drawing.Point(196, 64);
+            this.lineColorButton.Name = "lineColorButton";
+            this.lineColorButton.Size = new System.Drawing.Size(78, 23);
+            this.lineColorButton.TabIndex = 2;
+            this.lineColorButton.Text = "Color";
+            this.lineColorButton.UseVisualStyleBackColor = true;
+            this.lineColorButton.Click += new System.EventHandler(this.lineColorButton_Click);
+            // 
             // lineButton
             // 
             this.lineButton.Appearance = System.Windows.Forms.Appearance.Button;
             this.lineButton.AutoSize = true;
-            this.lineButton.Location = new System.Drawing.Point(8, 6);
+            this.lineButton.Location = new System.Drawing.Point(128, 35);
             this.lineButton.Name = "lineButton";
             this.lineButton.Size = new System.Drawing.Size(37, 23);
             this.lineButton.TabIndex = 1;
             this.lineButton.Text = "Line";
             this.lineButton.UseVisualStyleBackColor = true;
             this.lineButton.CheckedChanged += new System.EventHandler(this.toolChecked);
-            //
+            // 
             // rectangleButton
-            //
+            // 
             this.rectangleButton.Appearance = System.Windows.Forms.Appearance.Button;
             this.rectangleButton.AutoSize = true;
-            this.rectangleButton.Location = new System.Drawing.Point(130, 6);
+            this.rectangleButton.Location = new System.Drawing.Point(8, 35);
             this.rectangleButton.Name = "rectangleButton";
-            this.rectangleButton.Size = new System.Drawing.Size(37, 23);
+            this.rectangleButton.Size = new System.Drawing.Size(66, 23);
             this.rectangleButton.TabIndex = 1;
             this.rectangleButton.Text = "Rectangle";
             this.rectangleButton.UseVisualStyleBackColor = true;
             this.rectangleButton.CheckedChanged += new System.EventHandler(this.toolChecked);
-            //
+            // 
             // circleButton
-            //
+            // 
             this.circleButton.Appearance = System.Windows.Forms.Appearance.Button;
             this.circleButton.AutoSize = true;
-            this.circleButton.Location = new System.Drawing.Point(130, 46);
+            this.circleButton.Location = new System.Drawing.Point(80, 35);
             this.circleButton.Name = "circleButton";
-            this.circleButton.Size = new System.Drawing.Size(37, 23);
+            this.circleButton.Size = new System.Drawing.Size(43, 23);
             this.circleButton.TabIndex = 1;
             this.circleButton.Text = "Circle";
             this.circleButton.UseVisualStyleBackColor = true;
@@ -208,6 +257,8 @@
             // 
             // viewTabPage
             // 
+            this.viewTabPage.Controls.Add(this.selectBackColorButton);
+            this.viewTabPage.Controls.Add(this.selectBackColor);
             this.viewTabPage.Controls.Add(this.originMovementStepLabel);
             this.viewTabPage.Controls.Add(this.scaleStepLabel);
             this.viewTabPage.Controls.Add(this.originMovementStepValue);
@@ -222,6 +273,25 @@
             this.viewTabPage.TabIndex = 2;
             this.viewTabPage.Text = "View";
             this.viewTabPage.UseVisualStyleBackColor = true;
+            // 
+            // selectBackColorButton
+            // 
+            this.selectBackColorButton.Location = new System.Drawing.Point(202, 3);
+            this.selectBackColorButton.Name = "selectBackColorButton";
+            this.selectBackColorButton.Size = new System.Drawing.Size(108, 23);
+            this.selectBackColorButton.TabIndex = 5;
+            this.selectBackColorButton.Text = "Select Background";
+            this.selectBackColorButton.UseVisualStyleBackColor = true;
+            this.selectBackColorButton.Click += new System.EventHandler(this.selectBackColorButton_Click);
+            // 
+            // selectBackColor
+            // 
+            this.selectBackColor.BackColor = System.Drawing.SystemColors.Highlight;
+            this.selectBackColor.Location = new System.Drawing.Point(202, 32);
+            this.selectBackColor.Name = "selectBackColor";
+            this.selectBackColor.Size = new System.Drawing.Size(108, 46);
+            this.selectBackColor.TabIndex = 4;
+            this.selectBackColor.TabStop = false;
             // 
             // originMovementStepLabel
             // 
@@ -240,15 +310,6 @@
             this.scaleStepLabel.Size = new System.Drawing.Size(57, 13);
             this.scaleStepLabel.TabIndex = 2;
             this.scaleStepLabel.Text = "Scale step";
-            // 
-            // fpsLabel
-            // 
-            this.fpsLabel.AutoSize = true;
-            this.fpsLabel.Location = new System.Drawing.Point(60, 70);
-            this.fpsLabel.Name = "fpsLabel";
-            this.fpsLabel.Size = new System.Drawing.Size(109, 13);
-            this.fpsLabel.TabIndex = 3;
-            this.fpsLabel.Text = "Render fps";
             // 
             // originMovementStepValue
             // 
@@ -284,16 +345,39 @@
             0,
             0});
             // 
+            // invertedDirectionCheckbox
+            // 
+            this.invertedDirectionCheckbox.AutoSize = true;
+            this.invertedDirectionCheckbox.Location = new System.Drawing.Point(63, 81);
+            this.invertedDirectionCheckbox.Name = "invertedDirectionCheckbox";
+            this.invertedDirectionCheckbox.Size = new System.Drawing.Size(128, 17);
+            this.invertedDirectionCheckbox.TabIndex = 1;
+            this.invertedDirectionCheckbox.Text = "Inverted key direction";
+            this.invertedDirectionCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // fpsLabel
+            // 
+            this.fpsLabel.AutoSize = true;
+            this.fpsLabel.Location = new System.Drawing.Point(58, 65);
+            this.fpsLabel.Name = "fpsLabel";
+            this.fpsLabel.Size = new System.Drawing.Size(59, 13);
+            this.fpsLabel.TabIndex = 3;
+            this.fpsLabel.Text = "Render fps";
+            // 
             // fpsValue
             // 
-            this.fpsValue.Location = new System.Drawing.Point(123, 70);
+            this.fpsValue.Location = new System.Drawing.Point(123, 58);
+            this.fpsValue.Maximum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
             this.fpsValue.Minimum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.fpsValue.Maximum = 90;
-            this.fpsValue.Name = "originMovementStepValue";
+            this.fpsValue.Name = "fpsValue";
             this.fpsValue.Size = new System.Drawing.Size(73, 20);
             this.fpsValue.TabIndex = 1;
             this.fpsValue.Value = new decimal(new int[] {
@@ -301,17 +385,6 @@
             0,
             0,
             0});
-            //
-            // invertedDirectionCheckbox
-            //
-            this.invertedDirectionCheckbox.Appearance = System.Windows.Forms.Appearance.Normal;
-            this.invertedDirectionCheckbox.AutoSize = true;
-            this.invertedDirectionCheckbox.Location = new System.Drawing.Point(123, 56);
-            this.invertedDirectionCheckbox.Name = "invertedDirectionCheckbox";
-            this.invertedDirectionCheckbox.Size = new System.Drawing.Size(37, 23);
-            this.invertedDirectionCheckbox.TabIndex = 1;
-            this.invertedDirectionCheckbox.Text = "Inverted key direction";
-            this.invertedDirectionCheckbox.UseVisualStyleBackColor = true;
             // 
             // sidePanel1
             // 
@@ -326,13 +399,14 @@
             // objectListView
             // 
             this.objectListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.objectListView.ForeColor = System.Drawing.SystemColors.InfoText;
             this.objectListView.FormattingEnabled = true;
             this.objectListView.Location = new System.Drawing.Point(0, 0);
             this.objectListView.Name = "objectListView";
+            this.objectListView.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.objectListView.Size = new System.Drawing.Size(200, 504);
             this.objectListView.TabIndex = 0;
-            this.objectListView.ForeColor = System.Drawing.SystemColors.InfoText;
-            this.objectListView.DoubleClick += new System.EventHandler(objectListView_DoubleClick);
+            this.objectListView.DoubleClick += new System.EventHandler(this.objectListView_DoubleClick);
             // 
             // drawingAreaStatusStrip
             // 
@@ -381,6 +455,7 @@
             this.drawingArea.TabStop = false;
             this.drawingArea.Click += new System.EventHandler(this.drawingArea_Click);
             this.drawingArea.MouseMove += new System.Windows.Forms.MouseEventHandler(this.drawingArea_MouseMove);
+            this.drawingArea.MouseUp += new System.Windows.Forms.MouseEventHandler(this.drawingArea_MouseUp);
             // 
             // openFileDialog
             // 
@@ -393,52 +468,6 @@
             // colorDialog
             // 
             this.colorDialog.Color = System.Drawing.Color.White;
-            // 
-            // lineColorButton
-            // 
-            this.lineColorButton.Location = new System.Drawing.Point(8, 35);
-            this.lineColorButton.Name = "lineColorButton";
-            this.lineColorButton.Size = new System.Drawing.Size(119, 23);
-            this.lineColorButton.TabIndex = 2;
-            this.lineColorButton.Text = "Color";
-            this.lineColorButton.UseVisualStyleBackColor = true;
-            this.lineColorButton.Click += new System.EventHandler(this.lineColorButton_Click);
-            // 
-            // lineColorPicture
-            // 
-            this.lineColorPicture.BackColor = System.Drawing.Color.White;
-            this.lineColorPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lineColorPicture.Location = new System.Drawing.Point(51, 6);
-            this.lineColorPicture.Name = "lineColorPicture";
-            this.lineColorPicture.Size = new System.Drawing.Size(76, 23);
-            this.lineColorPicture.TabIndex = 3;
-            this.lineColorPicture.TabStop = false;
-            // 
-            // lineThicknessLabel
-            // 
-            this.lineThicknessLabel.AutoSize = true;
-            this.lineThicknessLabel.Location = new System.Drawing.Point(10, 66);
-            this.lineThicknessLabel.Name = "lineThicknessLabel";
-            this.lineThicknessLabel.Size = new System.Drawing.Size(56, 13);
-            this.lineThicknessLabel.TabIndex = 4;
-            this.lineThicknessLabel.Text = "Thickness";
-            // 
-            // lineThicknessValue
-            // 
-            this.lineThicknessValue.Location = new System.Drawing.Point(72, 64);
-            this.lineThicknessValue.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.lineThicknessValue.Name = "lineThicknessValue";
-            this.lineThicknessValue.Size = new System.Drawing.Size(55, 20);
-            this.lineThicknessValue.TabIndex = 5;
-            this.lineThicknessValue.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             // 
             // MainWindow
             // 
@@ -460,16 +489,18 @@
             this.fileTabPage.ResumeLayout(false);
             this.drawTapPage.ResumeLayout(false);
             this.drawTapPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lineThicknessValue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lineColorPicture)).EndInit();
             this.viewTabPage.ResumeLayout(false);
             this.viewTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.selectBackColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.originMovementStepValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.scaleStepValue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fpsValue)).EndInit();
             this.sidePanel1.ResumeLayout(false);
             this.drawingAreaStatusStrip.ResumeLayout(false);
             this.drawingAreaStatusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.drawingArea)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lineColorPicture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lineThicknessValue)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -511,6 +542,8 @@
         public System.Windows.Forms.ColorDialog colorDialog;
         public System.Windows.Forms.NumericUpDown lineThicknessValue;
         private System.Windows.Forms.Label lineThicknessLabel;
+        private System.Windows.Forms.Button selectBackColorButton;
+        private System.Windows.Forms.PictureBox selectBackColor;
     }
 }
 

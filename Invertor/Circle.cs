@@ -9,13 +9,13 @@ namespace Invertor
         private Point center;
         private double diameter;
         private Color color;
-
+        
         public Circle(string name, Point Center, double Diameter, Color Color)
         {
             Name = name;
-            center = Center;
-            diameter = Diameter;
-            color = Color;
+            this.Center = Center;
+            this.Diameter = Diameter;
+            this.Color = Color;
         }
 
         public Circle(string json)
@@ -42,13 +42,52 @@ namespace Invertor
             }
         }
 
-        public double Diameter { get => diameter; set => diameter = value; }
-        public Color Color { get => color; set => color = value; }
-        internal Point Center { get => center; set => center = value; }
+        #region getters and setters
+
+        public Color Color
+        {
+            get
+            {
+                return color;
+            }
+
+            set
+            {
+                color = value;
+            }
+        }
+
+        public double Diameter
+        {
+            get
+            {
+                return diameter;
+            }
+
+            set
+            {
+                diameter = value;
+            }
+        }
+
+        public Point Center
+        {
+            get
+            {
+                return center;
+            }
+
+            set
+            {
+                center = value;
+            }
+        }
+
+        #endregion
 
         public override void Render(Graphics g, Bitmap b, Point origin, double scale)
         {
-            g.DrawEllipse(new Pen(Color), new Rectangle(new System.Drawing.Point((int)(scale * (center.X - Diameter)) + origin.X, (int)(scale * (center.Y - Diameter)) + origin.Y),new Size((int)(Diameter+Diameter), (int)(Diameter+Diameter))));
+            g.DrawEllipse(new Pen(Color), new Rectangle(new System.Drawing.Point((int)(scale * (Center.X - Diameter)) + origin.X, (int)(scale * (Center.Y - Diameter)) + origin.Y),new Size((int)(Diameter+Diameter), (int)(Diameter+Diameter))));
 
         }
 
@@ -65,7 +104,7 @@ namespace Invertor
 
         public override string ToString()
         {
-            return Name + ": " + center.Name + ": " + (int)Diameter;
+            return Name + ": " + Center.Name + ": " + (int)Diameter;
         }
 
     }

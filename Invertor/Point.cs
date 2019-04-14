@@ -13,7 +13,6 @@ namespace Invertor
         int x, y, size;
         Color color = Color.White;
         
-
         public Point(string Name, int X,int Y)
         {
             this.Name = Name;
