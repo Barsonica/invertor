@@ -140,7 +140,7 @@ namespace Invertor
 
         public override void Render(Graphics g, Bitmap b, Point origin, double scale)
         {
-            if (Name != "Origin")
+            if (Name != "origin")
                 g.DrawRectangle(new Pen(Color, size), new Rectangle(new System.Drawing.Point((int)(scale * X) + origin.x, (int)(scale * Y) + origin.Y), new Size(1, 1)));
             else
                 g.DrawRectangle(new Pen(Color, size), new Rectangle(new System.Drawing.Point(X, Y), new Size(1, 1)));

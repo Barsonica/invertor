@@ -403,33 +403,40 @@ namespace Invertor
                 file = sr.ReadToEnd();
             }
 
-            string[] lines = file.Split('\n');
-
-            for (int i = 0; i < lines.Length - 1; i++)
+            try
             {
-                if (lines[i].Split('{')[0] == "Point")
-                {
-                    Point p = new Point(lines[i].Split('{')[1].Split('}')[0]);
-                    objectsInSketch.Add(p);
-                    if (p.Name == "origin")
-                        origin = p;
-                }
+                string[] lines = file.Split('\n');
 
+                for (int i = 0; i < lines.Length - 1; i++)
+                {
+                    if (lines[i].Split('{')[0] == "Point")
+                    {
+                        Point p = new Point(lines[i].Split('{')[1].Split('}')[0]);
+                        objectsInSketch.Add(p);
+                        if (p.Name == "origin")
+                            origin = p;
+                    }
+
+                }
+                for (int i = 0; i < lines.Length - 1; i++)
+                {
+                    if (lines[i].Split('{')[0] == "Line")
+                    {
+                        Line l = new Line(lines[i].Split('{')[1].Split('}')[0]);
+
+                        Object p0 = objectsInSketch.Where(x => x.Name == l.StartPoint.Name).First();
+                        Object p1 = objectsInSketch.Where(x => x.Name == l.EndPoint.Name).First();
+
+                        l.StartPoint = p0 as Point;
+                        l.EndPoint = p1 as Point;
+
+                        objectsInSketch.Add(l);
+                    }
+                }
             }
-            for (int i = 0; i < lines.Length - 1; i++)
+            catch
             {
-                if (lines[i].Split('{')[0] == "Line")
-                {
-                    Line l = new Line(lines[i].Split('{')[1].Split('}')[0]);
-
-                    Object p0 = objectsInSketch.Where(x => x.Name == l.StartPoint.Name).First();
-                    Object p1 = objectsInSketch.Where(x => x.Name == l.EndPoint.Name).First();
-
-                    l.StartPoint = p0 as Point;
-                    l.EndPoint = p1 as Point;
-
-                    objectsInSketch.Add(l);
-                }
+                MessageBox.Show("Invalid file");
             }
 
             refreshObjectListView();
