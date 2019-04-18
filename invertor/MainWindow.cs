@@ -179,6 +179,7 @@ namespace Invertor
         private void drawingArea_MouseUp(object sender, EventArgs e)
         {
             dragingPoint = null;
+            refreshLabels();
         }
 
     
@@ -245,9 +246,19 @@ namespace Invertor
         private void drawingArea_MouseWheel(object sender, MouseEventArgs e)
         {
             if (e.Delta > 1)
-                scale += 0.01;
+            {
+                if (scale > 0.2)
+                    scale += (double)(scaleStepValue.Value / 100);
+                else
+                    scale *= 1.5;
+            }
             else
-                scale -= 0.01;
+            {
+                if (scale > 0.2)
+                    scale -= (double)(scaleStepValue.Value / 100);
+                else
+                    scale /= 1.5;
+            }
             refreshLabels();
         }
 
@@ -420,7 +431,7 @@ namespace Invertor
             if (this.Text.Contains("*")) { 
                 DialogResult Result = MessageBox.Show("Do you want to save the file?", "Quit application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                 if (Result == DialogResult.Cancel)
-                    return;
+                    e.Cancel = true;
                 else if (Result == DialogResult.Yes)
                 {
                     saveJson(saveFileDialog.FileName);
