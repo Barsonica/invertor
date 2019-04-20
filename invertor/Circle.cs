@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace Invertor
 {
@@ -9,7 +10,9 @@ namespace Invertor
         private Point center;
         private double diameter;
         private Color color;
-        
+
+        private List<Object> liesOn = new List<Object>();
+
         public Circle(string name, Point Center, double Diameter, Color Color)
         {
             Name = name;
@@ -66,7 +69,8 @@ namespace Invertor
 
             set
             {
-                diameter = value;
+                if(!Locked)
+                    diameter = value;
             }
         }
 
@@ -79,9 +83,12 @@ namespace Invertor
 
             set
             {
-                center = value;
+                if(!Locked)
+                    center = value;
             }
         }
+
+        public List<Object> LiesOn { get => liesOn; set => liesOn = value; }
 
         #endregion
 
@@ -90,6 +97,11 @@ namespace Invertor
             Point renderPoint = new Point("", (int)(scale * (Center.X - Diameter)) + origin.X, (int)(scale * (Center.Y - Diameter)) + origin.Y);
             Rectangle renderRect = new Rectangle(renderPoint.systemPoint,new Size((int)((Diameter + Diameter)*scale), (int)((Diameter + Diameter)*scale)));
             g.DrawEllipse(new Pen(Color), renderRect);
+
+        }
+
+        public override void resolveTies()
+        {
 
         }
 

@@ -64,6 +64,7 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.paraelButton = new System.Windows.Forms.Button();
             this.topPanel.SuspendLayout();
             this.topRibbonTab.SuspendLayout();
             this.fileTabPage.SuspendLayout();
@@ -166,6 +167,7 @@
             this.drawTapPage.Controls.Add(this.lineThicknessLabel);
             this.drawTapPage.Controls.Add(this.lineColorPicture);
             this.drawTapPage.Controls.Add(this.lineColorButton);
+            this.drawTapPage.Controls.Add(this.paraelButton);
             this.drawTapPage.Location = new System.Drawing.Point(4, 22);
             this.drawTapPage.Name = "drawTapPage";
             this.drawTapPage.Padding = new System.Windows.Forms.Padding(3);
@@ -461,6 +463,16 @@
             this.drawingArea.MouseUp += new System.Windows.Forms.MouseEventHandler(this.drawingArea_MouseUp);
             this.drawingArea.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.drawingArea_MouseWheel);
             // 
+            // paraelButton
+            // 
+            this.paraelButton.Location = new System.Drawing.Point(300, 20);
+            this.paraelButton.Name = "paraelButton";
+            this.paraelButton.Size = new System.Drawing.Size(75, 23);
+            this.paraelButton.TabIndex = 3;
+            this.paraelButton.Text = "Parael";
+            this.paraelButton.UseVisualStyleBackColor = true;
+            this.paraelButton.Click += new System.EventHandler(this.paraelButton_Click);
+            // 
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog";
@@ -549,6 +561,7 @@
         private System.Windows.Forms.Label lineThicknessLabel;
         private System.Windows.Forms.Button selectBackColorButton;
         private System.Windows.Forms.PictureBox selectBackColor;
+        private System.Windows.Forms.Button paraelButton;
     }
 }
 

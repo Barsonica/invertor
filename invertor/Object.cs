@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Drawing;
 
 
 namespace Invertor
@@ -12,6 +6,7 @@ namespace Invertor
     public abstract class Object
     {
         string name;
+        bool locked;
 
         public string Name
         {
@@ -26,7 +21,11 @@ namespace Invertor
             }
         }
 
+        public bool Locked { get => locked; set => locked = value; }
+
         abstract public void Render(Graphics g, Bitmap b,Point origin, double scale);
+
+        abstract public void resolveTies();
 
         abstract public string toJson();
     }

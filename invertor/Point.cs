@@ -12,6 +12,8 @@ namespace Invertor
     {
         int x, y, size;
         Color color = Color.White;
+
+        private List<Object> liesOn = new List<Object>();
         
         public Point(string Name, int X,int Y)
         {
@@ -74,7 +76,8 @@ namespace Invertor
 
             set
             {
-                x = value;
+                if(!Locked)
+                    x = value;
             }
         }
 
@@ -87,7 +90,8 @@ namespace Invertor
 
             set
             {
-                y = value;
+                if(!Locked)
+                    y = value;
             }
         }
 
@@ -131,6 +135,8 @@ namespace Invertor
             }
         }
 
+        public List<Object> LiesOn { get => liesOn; set => liesOn = value; }
+
         #endregion
 
         public double distance(Point p0)
@@ -144,6 +150,11 @@ namespace Invertor
                 g.DrawRectangle(new Pen(Color, size), new Rectangle(new System.Drawing.Point((int)(scale * X) + origin.x, (int)(scale * Y) + origin.Y), new Size(1, 1)));
             else
                 g.DrawRectangle(new Pen(Color, size), new Rectangle(new System.Drawing.Point(X, Y), new Size(1, 1)));
+        }
+
+        public override void resolveTies()
+        {
+
         }
 
         public override string ToString()
