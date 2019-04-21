@@ -7,21 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Numerics;
 
 
 namespace Invertor
 {
     public class Line : Object
     {
-        private Point startPoint,endPoint;
+        private Point startPoint, endPoint;
         private int width;
         Color color = Color.White;
 
-
+        private List<Line> paraelLines = new List<Line>();
+        private List<Line> perpLines = new List<Line>();
 
         public Line() { }//needed for saving
 
-        public Line(string Name, Point StartPoint,Point EndPoint,int Width)
+        public Line(string Name, Point StartPoint, Point EndPoint, int Width)
         {
             this.Name = Name;
             startPoint = StartPoint;
@@ -56,7 +58,7 @@ namespace Invertor
                         Color = Color.FromArgb(int.Parse(values[1]));
                         break;
                     case "StartPoint":
-                        startPoint = new Point(values[1].Trim(),0,0);
+                        startPoint = new Point(values[1].Trim(), 0, 0);
                         break;
                     case "EndPoint":
                         endPoint = new Point(values[1].Trim(), 0, 0);
@@ -76,7 +78,8 @@ namespace Invertor
 
             set
             {
-                startPoint = value;
+                if (!Locked)
+                    startPoint = value;
             }
         }
 
@@ -89,7 +92,8 @@ namespace Invertor
 
             set
             {
-                endPoint = value;
+                if (!Locked)
+                    endPoint = value;
             }
         }
 
@@ -119,12 +123,23 @@ namespace Invertor
             }
         }
 
+        public List<Line> ParaelLines { get => paraelLines; set => paraelLines = value; }
+        public List<Line> PerpLines { get => perpLines; set => perpLines = value; }
+
         #endregion
 
-        public override void Render(Graphics g,Bitmap b, Point origin, double scale)
+        public override void Render(Graphics g, Bitmap b, Point origin, double scale)
         {
             //if(inBitmap(b, origin, scale))
             g.DrawLine(new Pen(Color, Width), new System.Drawing.Point((int)(scale * startPoint.X) + origin.X, (int)(scale * startPoint.Y) + origin.Y), new System.Drawing.Point((int)(endPoint.X * scale) + origin.X, (int)(endPoint.Y * scale) + origin.Y));
+        }
+
+        public override void resolveTies()
+        {
+            foreach (Line l in paraelLines)
+            {
+                l.setDirection(Direction());
+            }
         }
 
         bool inBitmap(Bitmap bmp, Point origin, double scale)
@@ -145,7 +160,7 @@ namespace Invertor
         {
             string result = "";
             result += "Name:" + Name + ",";
-            result += "StartPoint:" +startPoint.Name + ",";
+            result += "StartPoint:" + startPoint.Name + ",";
             result += "EndPoint:" + endPoint.Name + ",";
             result += "Width:" + Width.ToString() + ",";
             result += "Color:" + color.ToArgb() + ",";
@@ -153,5 +168,113 @@ namespace Invertor
             return result;
         }
 
+
+        public direction Direction()
+        {
+            direction result = new direction();
+
+            double diffX = EndPoint.X - StartPoint.X;
+            double diffY = EndPoint.Y - StartPoint.Y;
+
+            if (Math.Abs(diffX) > Math.Abs(diffY))
+            {
+                result.Y = diffY / Math.Abs(diffX); // something absolute lower than 1
+                result.X = diffX / Math.Abs(diffX); // 1 or -1
+            }
+            else if (Math.Abs(diffX) < Math.Abs(diffY))
+            {
+                result.X = diffX / Math.Abs(diffY); // something absolute lower than 1
+                result.Y = diffY / Math.Abs(diffY); // 1 or -1
+            }
+            else
+            {
+                result.X = diffX / Math.Abs(diffX);
+                result.Y = diffY / Math.Abs(diffY);
+            }
+
+            return result;
+        }
+
+        public double Degrees()
+        {
+            direction D = Direction();
+
+            if (Math.Abs(D.X) > Math.Abs(D.Y))
+            {
+                if (D.X < 0)
+                {
+                    D.X -= 1;
+                    D.Y = Math.Abs(D.Y) / 2;
+                    return ((D.Y * 90) + 90);
+                }
+                else
+                {
+                    D.Y -= 1;
+                    D.Y = Math.Abs(D.Y) / 2;
+                    return ((D.Y * 90) + 270);
+                }
+
+            }
+            else if (Math.Abs(D.X) < Math.Abs(D.Y))
+            {
+
+                if (D.Y < 0)
+                {
+                    D.X -= 1;
+                    D.X = Math.Abs(D.X) / 2;
+                    return ((D.X * 90) + 180);
+                }
+                else
+                {
+                    D.X -= 1;
+                    D.X = Math.Abs(D.X) / 2;
+                    return ((D.X * 90));
+                }
+            }
+            else //they are equal
+            {
+                if (D.X > 0)
+                {
+                    if (D.Y > 0)
+                        return 0;
+                    else
+                        return 270;
+                }
+                else
+                {
+                    if (D.Y > 0)
+                        return 90;
+                    else
+                        return 180;
+                }
+            }
+            throw new Exception("invalid parameter");
+        }
+
+        public void setDirection(direction D)
+        {
+
+            double lenght = StartPoint.distance(EndPoint);
+
+            double ratio = lenght / (D.X + D.Y);
+
+            EndPoint.X = StartPoint.X + (int)(ratio * D.X);
+            EndPoint.Y = StartPoint.Y + (int)(ratio * D.Y);
+        }
+
     }
+
+    public struct direction
+    {
+        double x, y;
+
+        public double X { get => x; set => x = value; }
+        public double Y { get => y; set => y = value; }
+
+        public override string ToString()
+        {
+            return X + " " + Y;
+        }
+    }
+
 }

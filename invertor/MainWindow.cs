@@ -25,8 +25,10 @@ namespace Invertor
 
         Graphics g;
         Bitmap bmp = new Bitmap(2000, 2000);
+
         Thread renderThread;
         System.Timers.Timer renderTimer = new System.Timers.Timer();
+        Thread tiesThread;
 
         string selectedTool = "";
         List<object> toolControlsList = new List<object>();
@@ -38,6 +40,7 @@ namespace Invertor
 
             renderThread = new Thread(renderCycle);
             g = Graphics.FromImage(bmp);
+            tiesThread = new Thread(resolveTies);
 
             // list of all objects
             objectsInSketch = new List<Object>();
@@ -128,9 +131,7 @@ namespace Invertor
                 {
                     secondLastPoint = firstLastPoint;
                     firstLastPoint = null;
-                    if (pointSnapping(secondLastPoint.systemPoint) == null)
-                        objectsInSketch.Add(secondLastPoint);
-                    else
+                    if (pointSnapping(secondLastPoint.systemPoint) != null)
                         secondLastPoint = pointSnapping(secondLastPoint.systemPoint);
 
                 }
@@ -139,21 +140,46 @@ namespace Invertor
                     switch (selectedTool) //tool switch
                     {
                         case "line":
+                            if (!objectsInSketch.Contains(secondLastPoint))
+                                secondLastPoint = addPoint(secondLastPoint.systemPoint);
                             if (!objectsInSketch.Contains(firstLastPoint))
-                                objectsInSketch.Add(firstLastPoint);
-                            addLine(firstLastPoint, secondLastPoint);
+                                firstLastPoint = addPoint(firstLastPoint.systemPoint);
+                            addLine(secondLastPoint, firstLastPoint);
                             break;
                         case "rectangle":
                             if (!objectsInSketch.Contains(firstLastPoint))
-                                objectsInSketch.Add(firstLastPoint);
+                                firstLastPoint = addPoint(firstLastPoint.systemPoint);
+                            if (!objectsInSketch.Contains(secondLastPoint))
+                                secondLastPoint = addPoint(secondLastPoint.systemPoint);
+
                             Point p0 = addPoint(new System.Drawing.Point(secondLastPoint.X, firstLastPoint.Y));
-                            addLine(firstLastPoint, p0);
                             Point p1 = addPoint(new System.Drawing.Point(firstLastPoint.X, secondLastPoint.Y));
-                            addLine(firstLastPoint, p1);
-                            addLine(secondLastPoint, p0);
-                            addLine(secondLastPoint, p1);
+
+                            Line l0 = addLine(firstLastPoint, p0);
+                            Line l1 = addLine(firstLastPoint, p1);
+                            Line l2 = addLine(p0, secondLastPoint);
+                            Line l3 = addLine(p1, secondLastPoint);
+
+                            //add parael ties
+                            l0.ParaelLines.Add(l3);
+                            l3.ParaelLines.Add(l0);
+                            l2.ParaelLines.Add(l1);
+                            l1.ParaelLines.Add(l2);
+
+                            //add perpendicular ties
+                            l0.PerpLines.Add(l1);
+                            l0.PerpLines.Add(l2);
+                            l1.PerpLines.Add(l0);
+                            l1.PerpLines.Add(l3);
+                            l2.PerpLines.Add(l0);
+                            l2.PerpLines.Add(l3);
+                            l3.PerpLines.Add(l1);
+                            l3.PerpLines.Add(l2);
+
                             break;
                         case "circle":
+                            if (!objectsInSketch.Contains(secondLastPoint))
+                                secondLastPoint = addPoint(secondLastPoint.systemPoint);
                             addCircle(secondLastPoint, firstLastPoint.distance(secondLastPoint));
                             break;
                     }
@@ -165,6 +191,7 @@ namespace Invertor
                         secondLastPoint = null;
                     firstLastPoint = null;
                 }
+
             }
 
             refreshObjectListView();
@@ -174,6 +201,23 @@ namespace Invertor
                 secondLastPointLabelValue.Text = secondLastPoint.ToString();
             else
                 secondLastPointLabelValue.Text = "";
+
+
+        }
+
+        private void paraelButton_Click(object sender, EventArgs e)
+        {
+            ListBox.SelectedObjectCollection selected = objectListView.SelectedItems;
+
+            foreach(object o in selected)
+                if (o.GetType() != typeof(Line))
+                    throw new Exception("invalid type, expecting line");
+
+            foreach(object O in selected)
+                foreach (object o in selected)
+                    (O as Line).ParaelLines.Add(o as Line);
+
+            resolveTies();
         }
 
         private void drawingArea_MouseUp(object sender, EventArgs e)
@@ -225,9 +269,11 @@ namespace Invertor
             return p;
         }
 
-        void addLine(Point start, Point end)
+        Line addLine(Point start, Point end)
         {
-            objectsInSketch.Add(new Line("line" + countObjectsOfType(typeof(Line)), start, end, (int)lineThicknessValue.Value, lineColorPicture.BackColor));
+            Line l = new Line("line" + countObjectsOfType(typeof(Line)), start, end, (int)lineThicknessValue.Value, lineColorPicture.BackColor);
+            objectsInSketch.Add(l);
+            return l;
         }
 
         void addCircle(Point center, double radius)
@@ -341,6 +387,13 @@ namespace Invertor
 
 
         #endregion
+
+        void resolveTies()
+        {
+            foreach (Object o in objectsInSketch)
+                o.resolveTies();
+            refreshLabels();
+        }
 
         //keybinding
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
