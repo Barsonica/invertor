@@ -14,7 +14,14 @@ namespace Invertor
         Color color = Color.White;
 
         private List<Object> liesOn = new List<Object>();
-        
+
+        public Point(int X, int Y)
+        {
+            Name = "";
+            x = X;
+            y = Y;
+        }
+
         public Point(string Name, int X,int Y)
         {
             this.Name = Name;
@@ -135,13 +142,36 @@ namespace Invertor
             }
         }
 
-        public List<Object> LiesOn { get => liesOn; set => liesOn = value; }
+        public List<Object> LiesOn
+        {
+            get
+            {
+                return liesOn;
+            }
+
+            set
+            {
+                liesOn = value;
+            }
+        }
+
 
         #endregion
+
+        public void fromSystemPoint(System.Drawing.Point p)
+        {
+            X = p.X;
+            Y = p.Y;
+        }
 
         public double distance(Point p0)
         {
             return Math.Sqrt(Math.Abs(((X-p0.X) * (X - p0.X)) + ((Y-p0.Y) * (Y-p0.Y))));
+        }
+
+        public double distance(System.Drawing.Point p0)
+        {
+            return Math.Sqrt(Math.Abs(((X - p0.X) * (X - p0.X)) + ((Y - p0.Y) * (Y - p0.Y))));
         }
 
         public override void Render(Graphics g, Bitmap b, Point origin, double scale)
@@ -152,9 +182,19 @@ namespace Invertor
                 g.DrawRectangle(new Pen(Color, size), new Rectangle(new System.Drawing.Point(X, Y), new Size(1, 1)));
         }
 
+        public override void highlight(Graphics g, Bitmap b, Point origin, double scale, Color c)
+        {
+            g.DrawRectangle(new Pen(c, size*2), new Rectangle(new System.Drawing.Point((int)(scale * X) + origin.x - 2, (int)(scale * Y) + origin.Y - 2), new Size(5, 5)));
+        }
+
         public override void resolveTies()
         {
 
+        }
+
+        public Point Clone()
+        {
+            return new Point("", X, Y, Size);
         }
 
         public override string ToString()

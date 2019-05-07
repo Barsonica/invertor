@@ -36,6 +36,7 @@
             this.fileOpenButton = new System.Windows.Forms.Button();
             this.fileNewButton = new System.Windows.Forms.Button();
             this.drawTapPage = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.circleButton = new System.Windows.Forms.CheckBox();
             this.rectangleButton = new System.Windows.Forms.CheckBox();
             this.lineButton = new System.Windows.Forms.CheckBox();
@@ -43,6 +44,7 @@
             this.lineThicknessLabel = new System.Windows.Forms.Label();
             this.lineColorPicture = new System.Windows.Forms.PictureBox();
             this.lineColorButton = new System.Windows.Forms.Button();
+            this.paraelButton = new System.Windows.Forms.Button();
             this.viewTabPage = new System.Windows.Forms.TabPage();
             this.selectBackColorButton = new System.Windows.Forms.Button();
             this.selectBackColor = new System.Windows.Forms.PictureBox();
@@ -64,7 +66,6 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.paraelButton = new System.Windows.Forms.Button();
             this.topPanel.SuspendLayout();
             this.topRibbonTab.SuspendLayout();
             this.fileTabPage.SuspendLayout();
@@ -160,6 +161,7 @@
             // 
             // drawTapPage
             // 
+            this.drawTapPage.Controls.Add(this.button1);
             this.drawTapPage.Controls.Add(this.circleButton);
             this.drawTapPage.Controls.Add(this.rectangleButton);
             this.drawTapPage.Controls.Add(this.lineButton);
@@ -175,6 +177,16 @@
             this.drawTapPage.TabIndex = 1;
             this.drawTapPage.Text = "Draw";
             this.drawTapPage.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(295, 38);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "resolve";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // circleButton
             // 
@@ -257,6 +269,16 @@
             this.lineColorButton.Text = "Color";
             this.lineColorButton.UseVisualStyleBackColor = true;
             this.lineColorButton.Click += new System.EventHandler(this.lineColorButton_Click);
+            // 
+            // paraelButton
+            // 
+            this.paraelButton.Location = new System.Drawing.Point(295, 9);
+            this.paraelButton.Name = "paraelButton";
+            this.paraelButton.Size = new System.Drawing.Size(75, 23);
+            this.paraelButton.TabIndex = 3;
+            this.paraelButton.Text = "Parael";
+            this.paraelButton.UseVisualStyleBackColor = true;
+            this.paraelButton.Click += new System.EventHandler(this.paraelButton_Click);
             // 
             // viewTabPage
             // 
@@ -407,7 +429,7 @@
             this.objectListView.FormattingEnabled = true;
             this.objectListView.Location = new System.Drawing.Point(0, 0);
             this.objectListView.Name = "objectListView";
-            this.objectListView.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.objectListView.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.objectListView.Size = new System.Drawing.Size(200, 504);
             this.objectListView.TabIndex = 0;
             this.objectListView.DoubleClick += new System.EventHandler(this.objectListView_DoubleClick);
@@ -462,16 +484,6 @@
             this.drawingArea.MouseMove += new System.Windows.Forms.MouseEventHandler(this.drawingArea_MouseMove);
             this.drawingArea.MouseUp += new System.Windows.Forms.MouseEventHandler(this.drawingArea_MouseUp);
             this.drawingArea.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.drawingArea_MouseWheel);
-            // 
-            // paraelButton
-            // 
-            this.paraelButton.Location = new System.Drawing.Point(300, 20);
-            this.paraelButton.Name = "paraelButton";
-            this.paraelButton.Size = new System.Drawing.Size(75, 23);
-            this.paraelButton.TabIndex = 3;
-            this.paraelButton.Text = "Parael";
-            this.paraelButton.UseVisualStyleBackColor = true;
-            this.paraelButton.Click += new System.EventHandler(this.paraelButton_Click);
             // 
             // openFileDialog
             // 
@@ -562,6 +574,7 @@
         private System.Windows.Forms.Button selectBackColorButton;
         private System.Windows.Forms.PictureBox selectBackColor;
         private System.Windows.Forms.Button paraelButton;
+        private System.Windows.Forms.Button button1;
     }
 }
 

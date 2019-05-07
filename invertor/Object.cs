@@ -21,9 +21,22 @@ namespace Invertor
             }
         }
 
-        public bool Locked { get => locked; set => locked = value; }
+        public bool Locked
+        {
+            get
+            {
+                return locked;
+            }
+
+            set
+            {
+                locked = value;
+            }
+        }
 
         abstract public void Render(Graphics g, Bitmap b,Point origin, double scale);
+
+        abstract public void highlight(Graphics g, Bitmap b, Point origin, double scale, Color c);
 
         abstract public void resolveTies();
 

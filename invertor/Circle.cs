@@ -88,7 +88,19 @@ namespace Invertor
             }
         }
 
-        public List<Object> LiesOn { get => liesOn; set => liesOn = value; }
+        public List<Object> LiesOn
+        {
+            get
+            {
+                return liesOn;
+            }
+
+            set
+            {
+                liesOn = value;
+            }
+        }
+
 
         #endregion
 
@@ -100,6 +112,13 @@ namespace Invertor
 
         }
 
+        public override void highlight(Graphics g, Bitmap b, Point origin, double scale, Color c)
+        {
+            Point renderPoint = new Point("", (int)(scale * (Center.X - Diameter)) + origin.X, (int)(scale * (Center.Y - Diameter)) + origin.Y);
+            Rectangle renderRect = new Rectangle(renderPoint.systemPoint, new Size((int)((Diameter + Diameter) * scale), (int)((Diameter + Diameter) * scale)));
+            g.DrawEllipse(new Pen(c,4), renderRect);
+
+        }
         public override void resolveTies()
         {
 

@@ -2,7 +2,7 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="invertor/Line.cs">
     <Files>
       <File FileName="invertor/MainWindow.cs" Line="220" Column="27" />
-      <File FileName="invertor/Line.cs" Line="255" Column="10" />
+      <File FileName="invertor/Line.cs" Line="175" Column="1" />
       <File FileName="invertor/Circle.cs" Line="14" Column="33" />
       <File FileName="invertor/Point.cs" Line="16" Column="35" />
       <File FileName="invertor/MainWindow.Designer.cs" Line="468" Column="74" />
@@ -13,7 +13,6 @@
           <Node name="Invertor" expanded="True">
             <Node name="Invertor" expanded="True">
               <Node name="References" expanded="True" />
-              <Node name="Line.cs" selected="True" />
               <Node name="MainWindow.cs" expanded="True" />
             </Node>
           </Node>

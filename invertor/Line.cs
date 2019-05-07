@@ -14,7 +14,7 @@ namespace Invertor
 {
     public class Line : Object
     {
-        private Point startPoint, endPoint;
+        private Point startPoint, endPoint, midPoint;
         private int width;
         Color color = Color.White;
 
@@ -29,6 +29,8 @@ namespace Invertor
             startPoint = StartPoint;
             endPoint = EndPoint;
             this.Width = Width;
+
+            midPoint = new Point((int)((StartPoint.X + EndPoint.X) / 2), (int)((StartPoint.X + EndPoint.Y) / 2));
         }
 
         public Line(string Name, Point StartPoint, Point EndPoint, int Width, Color c)
@@ -38,6 +40,7 @@ namespace Invertor
             endPoint = EndPoint;
             this.Width = Width;
             color = c;
+            midPoint = new Point((int)((StartPoint.X + EndPoint.X) / 2), (int)((StartPoint.X + EndPoint.Y) / 2));
         }
 
         public Line(string file)
@@ -65,10 +68,11 @@ namespace Invertor
                         break;
                 }
             }
+            midPoint = new Point((int)((StartPoint.X + EndPoint.X) / 2), (int)((StartPoint.X + EndPoint.Y) / 2));
         }
 
         #region getters and setters
-
+        
         public Point StartPoint
         {
             get
@@ -123,23 +127,61 @@ namespace Invertor
             }
         }
 
-        public List<Line> ParaelLines { get => paraelLines; set => paraelLines = value; }
-        public List<Line> PerpLines { get => perpLines; set => perpLines = value; }
+        public List<Line> ParaelLines
+        {
+            get
+            {
+                return paraelLines;
+            }
+
+            set
+            {
+                paraelLines = value;
+            }
+        }
+
+        public List<Line> PerpLines
+        {
+            get
+            {
+                return perpLines;
+            }
+
+            set
+            {
+                perpLines = value;
+            }
+        }
+
+        public double Lenght
+        {
+            get
+            {
+                return StartPoint.distance(EndPoint);
+            }
+        }
+
 
         #endregion
 
         public override void Render(Graphics g, Bitmap b, Point origin, double scale)
         {
-            //if(inBitmap(b, origin, scale))
             g.DrawLine(new Pen(Color, Width), new System.Drawing.Point((int)(scale * startPoint.X) + origin.X, (int)(scale * startPoint.Y) + origin.Y), new System.Drawing.Point((int)(endPoint.X * scale) + origin.X, (int)(endPoint.Y * scale) + origin.Y));
+        }
+
+        public override void highlight(Graphics g, Bitmap b, Point origin, double scale, Color c)
+        {
+            g.DrawLine(new Pen(c, Width*3), new System.Drawing.Point((int)(scale * startPoint.X) + origin.X, (int)(scale * startPoint.Y) + origin.Y), new System.Drawing.Point((int)(endPoint.X * scale) + origin.X, (int)(endPoint.Y * scale) + origin.Y));
         }
 
         public override void resolveTies()
         {
             foreach (Line l in paraelLines)
             {
-                l.setDirection(Direction());
+                l.setDirection(slope(),this);
             }
+
+            midPoint = new Point((int)((StartPoint.X + EndPoint.X) / 2), (int)((StartPoint.X + EndPoint.Y) / 2));
         }
 
         bool inBitmap(Bitmap bmp, Point origin, double scale)
@@ -168,113 +210,68 @@ namespace Invertor
             return result;
         }
 
-
-        public direction Direction()
+        double slope()
         {
-            direction result = new direction();
+            if ((startPoint.X - endPoint.X) == 0)
+                return double.MaxValue;
+            else if ((startPoint.Y - endPoint.Y) == 0)
+                return 0;
+            else
+                return Math.Abs(startPoint.Y - endPoint.Y) / Math.Abs(startPoint.X - endPoint.X);
+        }
 
-            double diffX = EndPoint.X - StartPoint.X;
-            double diffY = EndPoint.Y - StartPoint.Y;
+        public void setDirection(double slope, Line sender)
+        {
+            System.Drawing.Point a = new System.Drawing.Point(), b = new System.Drawing.Point();
 
-            if (Math.Abs(diffX) > Math.Abs(diffY))
+            if (slope == 0)
             {
-                result.Y = diffY / Math.Abs(diffX); // something absolute lower than 1
-                result.X = diffX / Math.Abs(diffX); // 1 or -1
+                a.X = (int)(startPoint.X + Lenght);
+                a.Y = startPoint.X;
+
+                b.X = (int)(startPoint.X - Lenght);
+                b.Y = startPoint.Y;
             }
-            else if (Math.Abs(diffX) < Math.Abs(diffY))
+
+            // if slope is infinte 
+            else if (slope == double.MaxValue)
             {
-                result.X = diffX / Math.Abs(diffY); // something absolute lower than 1
-                result.Y = diffY / Math.Abs(diffY); // 1 or -1
+                a.X = startPoint.X;
+                a.Y = (int)(startPoint.Y + Lenght);
+
+                b.X = startPoint.X;
+                b.Y = (int)(startPoint.Y - Lenght);
             }
             else
             {
-                result.X = diffX / Math.Abs(diffX);
-                result.Y = diffY / Math.Abs(diffY);
+                double dx = (Lenght / Math.Sqrt(1 + (slope * slope)));
+                double dy = slope * dx;
+                a.X = (int)(startPoint.X + dx);
+                a.Y = (int)(startPoint.Y + dy);
+                b.X = (int)(startPoint.X - dx);
+                b.Y = (int)(startPoint.Y - dy);
             }
 
-            return result;
+            if (Math.Min(sender.StartPoint.distance(a), sender.StartPoint.distance(b)) < Math.Min(sender.EndPoint.distance(a), sender.EndPoint.distance(b)))
+                if ( sender.StartPoint.distance(a) < sender.StartPoint.distance(b) )
+                    endPoint.fromSystemPoint(a);
+                else
+                    endPoint.fromSystemPoint(b);
+            else
+                if (sender.EndPoint.distance(a) < sender.EndPoint.distance(b))
+                    endPoint.fromSystemPoint(a);
+                else
+                    endPoint.fromSystemPoint(b);
+
+            endPoint.X = a.X;
+            endPoint.Y = b.X;
+
         }
 
-        public double Degrees()
-        {
-            direction D = Direction();
-
-            if (Math.Abs(D.X) > Math.Abs(D.Y))
-            {
-                if (D.X < 0)
-                {
-                    D.X -= 1;
-                    D.Y = Math.Abs(D.Y) / 2;
-                    return ((D.Y * 90) + 90);
-                }
-                else
-                {
-                    D.Y -= 1;
-                    D.Y = Math.Abs(D.Y) / 2;
-                    return ((D.Y * 90) + 270);
-                }
-
-            }
-            else if (Math.Abs(D.X) < Math.Abs(D.Y))
-            {
-
-                if (D.Y < 0)
-                {
-                    D.X -= 1;
-                    D.X = Math.Abs(D.X) / 2;
-                    return ((D.X * 90) + 180);
-                }
-                else
-                {
-                    D.X -= 1;
-                    D.X = Math.Abs(D.X) / 2;
-                    return ((D.X * 90));
-                }
-            }
-            else //they are equal
-            {
-                if (D.X > 0)
-                {
-                    if (D.Y > 0)
-                        return 0;
-                    else
-                        return 270;
-                }
-                else
-                {
-                    if (D.Y > 0)
-                        return 90;
-                    else
-                        return 180;
-                }
-            }
-            throw new Exception("invalid parameter");
-        }
-
-        public void setDirection(direction D)
-        {
-
-            double lenght = StartPoint.distance(EndPoint);
-
-            double ratio = lenght / (D.X + D.Y);
-
-            EndPoint.X = StartPoint.X + (int)(ratio * D.X);
-            EndPoint.Y = StartPoint.Y + (int)(ratio * D.Y);
-        }
 
     }
 
-    public struct direction
-    {
-        double x, y;
-
-        public double X { get => x; set => x = value; }
-        public double Y { get => y; set => y = value; }
-
-        public override string ToString()
-        {
-            return X + " " + Y;
-        }
     }
+    
 
-}
+
