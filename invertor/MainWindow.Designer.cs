@@ -62,6 +62,8 @@
             this.secondLastPointLabelValue = new System.Windows.Forms.ToolStripStatusLabel();
             this.scaleLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.scaleLabelValue = new System.Windows.Forms.ToolStripStatusLabel();
+            this.prewievLenghtLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.prewievLenghtValue = new System.Windows.Forms.ToolStripStatusLabel();
             this.drawingArea = new System.Windows.Forms.PictureBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
@@ -90,7 +92,7 @@
             this.topPanel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.topPanel.Location = new System.Drawing.Point(0, 0);
             this.topPanel.Name = "topPanel";
-            this.topPanel.Size = new System.Drawing.Size(1268, 130);
+            this.topPanel.Size = new System.Drawing.Size(1289, 130);
             this.topPanel.TabIndex = 0;
             // 
             // topRibbonTab
@@ -102,7 +104,7 @@
             this.topRibbonTab.Location = new System.Drawing.Point(0, 0);
             this.topRibbonTab.Name = "topRibbonTab";
             this.topRibbonTab.SelectedIndex = 0;
-            this.topRibbonTab.Size = new System.Drawing.Size(1268, 130);
+            this.topRibbonTab.Size = new System.Drawing.Size(1289, 130);
             this.topRibbonTab.TabIndex = 2;
             // 
             // fileTabPage
@@ -114,7 +116,7 @@
             this.fileTabPage.Location = new System.Drawing.Point(4, 22);
             this.fileTabPage.Name = "fileTabPage";
             this.fileTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.fileTabPage.Size = new System.Drawing.Size(1260, 104);
+            this.fileTabPage.Size = new System.Drawing.Size(1281, 104);
             this.fileTabPage.TabIndex = 0;
             this.fileTabPage.Text = "File";
             this.fileTabPage.UseVisualStyleBackColor = true;
@@ -173,7 +175,7 @@
             this.drawTapPage.Location = new System.Drawing.Point(4, 22);
             this.drawTapPage.Name = "drawTapPage";
             this.drawTapPage.Padding = new System.Windows.Forms.Padding(3);
-            this.drawTapPage.Size = new System.Drawing.Size(1260, 104);
+            this.drawTapPage.Size = new System.Drawing.Size(1281, 104);
             this.drawTapPage.TabIndex = 1;
             this.drawTapPage.Text = "Draw";
             this.drawTapPage.UseVisualStyleBackColor = true;
@@ -294,7 +296,7 @@
             this.viewTabPage.Location = new System.Drawing.Point(4, 22);
             this.viewTabPage.Name = "viewTabPage";
             this.viewTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.viewTabPage.Size = new System.Drawing.Size(1260, 104);
+            this.viewTabPage.Size = new System.Drawing.Size(1281, 104);
             this.viewTabPage.TabIndex = 2;
             this.viewTabPage.Text = "View";
             this.viewTabPage.UseVisualStyleBackColor = true;
@@ -419,7 +421,7 @@
             this.sidePanel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.sidePanel1.Location = new System.Drawing.Point(0, 130);
             this.sidePanel1.Name = "sidePanel1";
-            this.sidePanel1.Size = new System.Drawing.Size(200, 504);
+            this.sidePanel1.Size = new System.Drawing.Size(200, 593);
             this.sidePanel1.TabIndex = 1;
             // 
             // objectListView
@@ -430,7 +432,7 @@
             this.objectListView.Location = new System.Drawing.Point(0, 0);
             this.objectListView.Name = "objectListView";
             this.objectListView.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.objectListView.Size = new System.Drawing.Size(200, 504);
+            this.objectListView.Size = new System.Drawing.Size(200, 593);
             this.objectListView.TabIndex = 0;
             this.objectListView.DoubleClick += new System.EventHandler(this.objectListView_DoubleClick);
             // 
@@ -440,10 +442,12 @@
             this.secondLastPointLabel,
             this.secondLastPointLabelValue,
             this.scaleLabel,
-            this.scaleLabelValue});
-            this.drawingAreaStatusStrip.Location = new System.Drawing.Point(200, 612);
+            this.scaleLabelValue,
+            this.prewievLenghtLabel,
+            this.prewievLenghtValue});
+            this.drawingAreaStatusStrip.Location = new System.Drawing.Point(200, 701);
             this.drawingAreaStatusStrip.Name = "drawingAreaStatusStrip";
-            this.drawingAreaStatusStrip.Size = new System.Drawing.Size(1068, 22);
+            this.drawingAreaStatusStrip.Size = new System.Drawing.Size(1089, 22);
             this.drawingAreaStatusStrip.TabIndex = 2;
             // 
             // secondLastPointLabel
@@ -470,13 +474,24 @@
             this.scaleLabelValue.Size = new System.Drawing.Size(25, 17);
             this.scaleLabelValue.Text = "100";
             // 
+            // prewievLenghtLabel
+            // 
+            this.prewievLenghtLabel.Name = "prewievLenghtLabel";
+            this.prewievLenghtLabel.Size = new System.Drawing.Size(50, 17);
+            this.prewievLenghtLabel.Text = "Lenght: ";
+            // 
+            // prewievLenghtValue
+            // 
+            this.prewievLenghtValue.Name = "prewievLenghtValue";
+            this.prewievLenghtValue.Size = new System.Drawing.Size(0, 17);
+            // 
             // drawingArea
             // 
             this.drawingArea.BackColor = System.Drawing.SystemColors.Highlight;
             this.drawingArea.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drawingArea.Location = new System.Drawing.Point(200, 130);
             this.drawingArea.Name = "drawingArea";
-            this.drawingArea.Size = new System.Drawing.Size(1068, 482);
+            this.drawingArea.Size = new System.Drawing.Size(1089, 571);
             this.drawingArea.TabIndex = 3;
             this.drawingArea.TabStop = false;
             this.drawingArea.Click += new System.EventHandler(this.drawingArea_Click);
@@ -502,7 +517,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1268, 634);
+            this.ClientSize = new System.Drawing.Size(1289, 723);
             this.Controls.Add(this.drawingArea);
             this.Controls.Add(this.drawingAreaStatusStrip);
             this.Controls.Add(this.sidePanel1);
@@ -575,6 +590,8 @@
         private System.Windows.Forms.PictureBox selectBackColor;
         private System.Windows.Forms.Button paraelButton;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolStripStatusLabel prewievLenghtLabel;
+        private System.Windows.Forms.ToolStripStatusLabel prewievLenghtValue;
     }
 }
 

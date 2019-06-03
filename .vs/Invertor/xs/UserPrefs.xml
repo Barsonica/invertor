@@ -1,11 +1,13 @@
 ﻿<Properties StartupConfiguration="{1A9F68B1-E557-4AB9-BFA5-DA5F666E904D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="invertor/Line.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="invertor/Point.cs">
     <Files>
       <File FileName="invertor/MainWindow.cs" Line="220" Column="27" />
       <File FileName="invertor/Line.cs" Line="175" Column="1" />
       <File FileName="invertor/Circle.cs" Line="14" Column="33" />
-      <File FileName="invertor/Point.cs" Line="16" Column="35" />
-      <File FileName="invertor/MainWindow.Designer.cs" Line="468" Column="74" />
+      <File FileName="invertor/Point.cs" Line="180" Column="99" />
+      <File FileName="invertor/MainWindow.Designer.cs" Line="468" Column="16" />
+      <File FileName="invertor/Label.cs" Line="34" Column="6" />
+      <File FileName="invertor/Object.cs" Line="27" Column="14" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,7 +15,7 @@
           <Node name="Invertor" expanded="True">
             <Node name="Invertor" expanded="True">
               <Node name="References" expanded="True" />
-              <Node name="MainWindow.cs" expanded="True" />
+              <Node name="Point.cs" selected="True" />
             </Node>
           </Node>
         </State>

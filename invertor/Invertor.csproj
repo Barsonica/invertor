@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="ObjectGroup.cs" />
     <Compile Include="Circle.cs" />
+    <Compile Include="Label.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
