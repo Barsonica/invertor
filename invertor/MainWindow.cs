@@ -69,6 +69,7 @@ namespace Invertor
             openFileDialog.Filter = "vector files (*.vec)|*.inv";
 
             renderThread.Start();
+
         }
 
         #region toolControl
@@ -138,9 +139,6 @@ namespace Invertor
                     secondLastPoint = firstLastPoint;
                     firstLastPoint = null;
                     secondLastPoint = pointSnapping(secondLastPoint);
-
-                    //reset the lenght input
-                    prewievLenghtValue.Text = "";
 
                 }
                 else
@@ -229,7 +227,7 @@ namespace Invertor
         {
             draging = false;
             refreshLabels();
-            //resolveTies();
+            resolveTies();
         }
 
     
@@ -292,9 +290,11 @@ namespace Invertor
         {
             Point newPoint = new Point((int)((drawingArea.PointToClient(MousePosition).X - origin.X) / scale), (int)((drawingArea.PointToClient(MousePosition).Y - origin.Y) / scale));
 
+
+            
             if (draging == true)
             {
-                //(objectListView.SelectedItem as Point).fromSystemPoint(newPoint.systemPoint);
+                (objectListView.SelectedItem as Point).fromSystemPoint(newPoint.systemPoint);
                 
             }else if(MouseButtons.Left == MouseButtons && selectedTool == ""){
                 origin.X += newPoint.X - mousePoint.X;
@@ -334,7 +334,7 @@ namespace Invertor
 
             highlightSelected();
 
-            //if draging, draw to mouse position
+            //if draging line, draw to mouse position
             if (secondLastPoint != null)
                 renderDraging();
 
@@ -453,38 +453,6 @@ namespace Invertor
             {
                 switch (e.KeyCode)
                 {
-                    //numbers to input
-                    case Keys.NumPad0:
-                        prewievLenghtValue.Text += "0";
-                        break;
-                    case Keys.NumPad1:
-                        prewievLenghtValue.Text += "1";
-                        break;
-                    case Keys.NumPad2:
-                        prewievLenghtValue.Text += "2";
-                        break;
-                    case Keys.NumPad3:
-                        prewievLenghtValue.Text += "3";
-                        break;
-                    case Keys.NumPad4:
-                        prewievLenghtValue.Text += "4";
-                        break;
-                    case Keys.NumPad5:
-                        prewievLenghtValue.Text += "5";
-                        break;
-                    case Keys.NumPad6:
-                        prewievLenghtValue.Text += "6";
-                        break;
-                    case Keys.NumPad7:
-                        prewievLenghtValue.Text += "7";
-                        break;
-                    case Keys.NumPad8:
-                        prewievLenghtValue.Text += "8";
-                        break;
-                    case Keys.NumPad9:
-                        prewievLenghtValue.Text += "9";
-                        break;
-
                     case Keys.L:
                         toggleTool(lineButton);
                         break;
@@ -498,8 +466,6 @@ namespace Invertor
                         resetselectedTool(null);
                         break;
                     case Keys.Enter:
-                        if (selectedTool == "circle")
-                            setCircleByDiameter();
                         firstLastPoint = null;
                         secondLastPoint = null;
                         break;
@@ -531,16 +497,6 @@ namespace Invertor
             }
 
             refreshObjectListView();
-        }
-
-        void setCircleByDiameter()
-        {
-            if (!objectsInSketch.Contains(secondLastPoint))
-                secondLastPoint = addPoint(secondLastPoint.systemPoint);
-            addCircle(secondLastPoint, int.Parse(prewievLenghtValue.Text));
-            secondLastPoint = null;
-            firstLastPoint = null;
-            prewievLenghtValue.Text = "";
         }
 
         #region Form events
