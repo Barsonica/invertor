@@ -1,7 +1,7 @@
 ﻿<Properties StartupConfiguration="{1A9F68B1-E557-4AB9-BFA5-DA5F666E904D}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="invertor/MainWindow.cs">
     <Files>
-      <File FileName="invertor/MainWindow.cs" Line="420" Column="14" />
+      <File FileName="invertor/MainWindow.cs" Line="421" Column="36" />
       <File FileName="invertor/Line.cs" Line="175" Column="1" />
       <File FileName="invertor/Circle.cs" Line="14" Column="33" />
       <File FileName="invertor/Point.cs" Line="180" Column="99" />
