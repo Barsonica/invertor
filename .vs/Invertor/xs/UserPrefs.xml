@@ -1,7 +1,7 @@
 ﻿<Properties StartupConfiguration="{1A9F68B1-E557-4AB9-BFA5-DA5F666E904D}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="invertor/Point.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="invertor/MainWindow.cs">
     <Files>
-      <File FileName="invertor/MainWindow.cs" Line="220" Column="27" />
+      <File FileName="invertor/MainWindow.cs" Line="420" Column="14" />
       <File FileName="invertor/Line.cs" Line="175" Column="1" />
       <File FileName="invertor/Circle.cs" Line="14" Column="33" />
       <File FileName="invertor/Point.cs" Line="180" Column="99" />
@@ -14,8 +14,7 @@
         <State name="__root__">
           <Node name="Invertor" expanded="True">
             <Node name="Invertor" expanded="True">
-              <Node name="References" expanded="True" />
-              <Node name="Point.cs" selected="True" />
+              <Node name="MainWindow.cs" selected="True" />
             </Node>
           </Node>
         </State>
